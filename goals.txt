@@ -1,0 +1,15 @@
+-Pogledati sto je supabase
+-Napraviti jedan film u bazu
+-Spoji svoju frontend app na supabase
+-UseEffect dohvati film najgluplje moguce i console loguj ga
+
+
+-Sacuvati filmove u const dataJs
+-Napraviti skriptu tj js file koji ce da uploduje 100 filmova u bazu
+-To bi bilo idealno da mozes da pokrenes u terminal
+-Da se to izvrti
+-Najbotovski da se napravi button u UI da se pokrene
+-Uzeti array od 100 filmova 
+-Napraviti post request u bazu u tabelu movies
+-Prije nego sto napravis post request kao neki safety mehanizam obrisi cijelu tabelu movies
+-Kad to odradim napraviti console log cijelog arrya sa supabase

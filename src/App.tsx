@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import './App.css'
-import supabase from './config/supabaseClient';
+import './App.css';
 import { requestMovie } from './api/requestMovie';
 
 function App() {
