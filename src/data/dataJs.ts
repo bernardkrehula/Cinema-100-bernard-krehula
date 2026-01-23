@@ -1,3 +1,5 @@
+import type { SingleMovieType } from "#/types/SingleMovieType";
+
 export const dataJs: SingleMovieType[] = [
   {
     rank: 1,
