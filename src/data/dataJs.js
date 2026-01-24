@@ -1,6 +1,4 @@
-import type { SingleMovieType } from "#/types/SingleMovieType";
-
-export const dataJs: SingleMovieType[] = [
+export const dataJs = [
   {
     rank: 1,
     title: 'The Shawshank Redemption',

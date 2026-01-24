@@ -4,7 +4,7 @@
 -UseEffect dohvati film najgluplje moguce i console loguj ga
 
 
--Sacuvati filmove u const dataJs
+-Sacuvati filmove u const dataJs // odradeno
 -Napraviti skriptu tj js file koji ce da uploduje 100 filmova u bazu
 -To bi bilo idealno da mozes da pokrenes u terminal
 -Da se to izvrti
