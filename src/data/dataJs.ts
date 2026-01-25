@@ -1,4 +1,4 @@
-export const dataJs = [
+const dataJs = [
   {
     rank: 1,
     title: 'The Shawshank Redemption',
@@ -2030,3 +2030,4 @@ export const dataJs = [
     imdbid: 'tt0052357',
   },
 ];
+export default dataJs;
