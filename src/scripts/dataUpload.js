@@ -1,5 +1,5 @@
-import dataJs from "../data/dataJs.ts";
-import supabase from "#/config/supabaseClientNode";
+import dataJs from "../data/dataJs.js";
+import supabase from "../config/supabaseClientNode.js";
 
 const uploadData = async () => {
   try {

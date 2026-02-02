@@ -1,4 +1,4 @@
-import supabase from "#/config/supabaseClientVite.ts";
+import supabase from "../config/supabaseClientVite";
 
 export const requestMovie = async () => {
   try {
