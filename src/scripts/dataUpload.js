@@ -1,15 +1,15 @@
 import dataJs from "../data/dataJs.js";
 import supabase from "../config/supabaseClientNode.js";
+import clearMovieTables from "./clearMoviesTable.js";
 
 const uploadData = async () => {
+  await clearMovieTables();
   try {
-    const { data, error } = await supabase
+    const { data } = await supabase
     .from("movies")
     .insert(dataJs)
-    .select()
-
-    
-    console.log('radi', data, error)
+    .select()   
+    return data
   } catch (error) {
     console.log(error);
   }
