@@ -5,11 +5,17 @@
 
 
 -Sacuvati filmove u const dataJs // odradeno
--Napraviti skriptu tj js file koji ce da uploduje 100 filmova u bazu
--To bi bilo idealno da mozes da pokrenes u terminal
+-Napraviti skriptu tj js file koji ce da uploduje 100 filmova u bazu // odradeno
+-To bi bilo idealno da mozes da pokrenes u terminal 
 -Da se to izvrti
 -Najbotovski da se napravi button u UI da se pokrene
 -Uzeti array od 100 filmova 
--Napraviti post request u bazu u tabelu movies
--Prije nego sto napravis post request kao neki safety mehanizam obrisi cijelu tabelu movies
--Kad to odradim napraviti console log cijelog arrya sa supabase
+-Napraviti post request u bazu u tabelu movies // odradeno
+-Prije nego sto napravis post request kao neki safety mehanizam obrisi cijelu tabelu movies // odradeno
+-Kad to odradim napraviti console log cijelog arrya sa supabase // odradeno
+
+
+
+3.2
+-Napraviti table movie sa nekim random filmovima 
+-Napraviti na homepage da se mogu sliajdati ti filmovi
