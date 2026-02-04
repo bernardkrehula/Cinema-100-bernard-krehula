@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "reset-movies": "node src/scripts/dataUpload.js"
+    "reset-movies": "node src/scripts/dataUpload.js",
+    "trending-movies-upload": "node src/scripts/trendingMoviesUpload.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.91.0",
