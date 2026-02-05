@@ -1,3 +1,4 @@
+import Btn from "../../components/btn";
 import "./index.css";
 import { FaPowerOff } from "react-icons/fa6";
 
@@ -12,7 +13,7 @@ const Homepage = () => {
           />
           <span>cinema 100</span>
         </div>
-        <span>Welcome back, Guest</span>
+        <span className="welcome-message">Welcome back, Guest</span>
         <div className="logout-option">
           <span>Log out</span>
           <Btn type='button'>
