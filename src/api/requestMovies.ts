@@ -1,6 +1,6 @@
 import supabase from "../config/supabaseClientVite";
 
-export const requestMovie = async () => {
+export const requestMovies = async () => {
   try {
     const response = await supabase
     .from("movies")
