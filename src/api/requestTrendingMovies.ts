@@ -1,0 +1,14 @@
+import supabase from "../config/supabaseClientVite";
+
+export const requestMovie = async () => {
+  try {
+    const response = await supabase
+    .from("trending_movies")
+    .select();
+
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
