@@ -1,5 +1,5 @@
 import "./index.css";
-import NavBar from "./navbar";
+import NavBar from "../../components/navbar";
 
 const Homepage = () => {
   return (

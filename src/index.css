@@ -7,8 +7,12 @@ html{
   padding: 0;
   box-sizing: border-box;
 }
+body{
+  background-color: var(--body-bg);
+}
 :root {
   --nav--bg: #161d2f;
   --nav-font: Outfit, sans-serif;
 
+  --body-bg: #10141e;
 }
