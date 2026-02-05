@@ -1,0 +1,24 @@
+.homepage{
+    width: 100%;
+}
+.navbar{
+    display: flex;
+    align-items: center;
+    background-color: var(--nav--bg);
+    height: 65px;
+    width: 100%;
+    font-family: var(--nav-font);
+    color: rgb(255, 255, 255);
+    font-weight: 400;
+}
+.logo-content{
+    display: flex;
+    align-items: center;
+    font-size: 1.7rem;
+    gap: 8px;
+    margin-left: 80px;
+}
+.logo{
+    width: 40px;
+    height: 40px;
+}

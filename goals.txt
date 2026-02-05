@@ -17,5 +17,5 @@
 
 
 3.2
--Napraviti table movie sa nekim random filmovima 
+-Napraviti table movie sa nekim random filmovima //odradeno
 -Napraviti na homepage da se mogu sliajdati ti filmovi
