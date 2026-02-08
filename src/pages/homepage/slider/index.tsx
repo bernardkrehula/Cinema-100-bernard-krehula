@@ -41,7 +41,7 @@ const Slider = () => {
       <h2 className="slider-title">Currently trending</h2>
       <div className="slider-content">
         <Btn type="button" onClick={() => slideOnClick("left")}>
-          <MdKeyboardArrowLeft />
+          <MdKeyboardArrowLeft className="left-arrow"/>
         </Btn>
         <div className="slider-box">
           <div
@@ -56,7 +56,7 @@ const Slider = () => {
           </div>
         </div>
         <Btn type="button" onClick={() => slideOnClick("right")}>
-          <MdKeyboardArrowRight />
+          <MdKeyboardArrowRight className="right-arrow"/>
         </Btn>
       </div>
     </div>

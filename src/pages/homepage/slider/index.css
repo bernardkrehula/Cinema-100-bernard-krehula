@@ -24,12 +24,12 @@
     gap: 5px;
     transition: transform 600ms ease-out;
 }
-.slider svg{
+.left-arrow, .right-arrow{
     fill: white;
     height: 80px;
     width: 80px;
     transition: 0.2s all;
 }
-.slider svg:hover{
+.left-arrow:hover, .right-arrow:hover{
     fill: rgb(213, 33, 33);
 }
