@@ -1,11 +1,11 @@
 import "./index.css";
 import SliderImg from "./SliderImg";
-import { requestTrendingMovies } from "../../api/requestTrendingMovies";
 import { useQuery } from "@tanstack/react-query";
-import Btn from "../../ui/btn";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useState } from "react";
+import Btn from "#/components/ui/btn";
+import { requestTrendingMovies } from "#/api/requestTrendingMovies";
 
 const Slider = () => {
   const [position, setPosition] = useState<number>(0);

@@ -28,4 +28,8 @@
     fill: white;
     height: 80px;
     width: 80px;
+    transition: 0.2s all;
+}
+.slider svg:hover{
+    fill: rgb(213, 33, 33);
 }

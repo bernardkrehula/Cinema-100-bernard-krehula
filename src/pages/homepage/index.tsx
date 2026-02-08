@@ -1,6 +1,6 @@
 import "./index.css";
-import NavBar from "../../components/navbar";
-import Slider from "../../components/slider";
+import NavBar from "../../components/layouts/navbar";
+import Slider from "./slider";
 
 const Homepage = () => {
   return (
