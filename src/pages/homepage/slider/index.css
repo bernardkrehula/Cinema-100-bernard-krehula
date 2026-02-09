@@ -1,4 +1,6 @@
 .slider{
+    display: flex;
+    flex-direction: column;
     margin: 70px auto;
     width: fit-content;
 }
@@ -9,6 +11,21 @@
     margin-left: 80px;
     margin-bottom: 10px;
 }
+.active-movie-line{
+    display: flex;
+    height: 1px;
+    margin-left: auto;
+    width: fit-content;
+    margin-right: 84px;
+    margin-bottom: 8px;
+    gap: 3px;
+}
+.block{
+    background-color: rgb(178, 178, 178);
+    width: 20px;
+    height: 1px;
+}
+
 .slider-content{
     display: flex;
     height: fit-content;
@@ -17,6 +34,7 @@
 .slider-box{
     display: flex;
     overflow: hidden;
+    height: auto;
     width: 938px;
 }
 .slider-box-content{

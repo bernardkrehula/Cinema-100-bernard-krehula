@@ -9,6 +9,7 @@ import { requestTrendingMovies } from "#/api/requestTrendingMovies";
 
 const Slider = () => {
   const [position, setPosition] = useState<number>(0);
+  const [acitvePage, setActivePage] = useState<number>(0);
   const { data: trendingMovies } = useQuery({
     queryKey: ["trending-movies"],
     queryFn: () => requestTrendingMovies(),
@@ -35,10 +36,17 @@ const Slider = () => {
       setPosition((prev) => (prev === 0 ? -maxTranslate : prev + step));
     }
   };
-
+  
   return (
     <div className="slider">
       <h2 className="slider-title">Currently trending</h2>
+      <div className="active-movie-line">
+        <div className="block"></div>
+        <div className="block"></div>
+        <div className="block"></div>
+        <div className="block"></div>
+        <div className="block"></div>
+      </div>
       <div className="slider-content">
         <Btn type="button" onClick={() => slideOnClick("left")}>
           <MdKeyboardArrowLeft className="left-arrow"/>

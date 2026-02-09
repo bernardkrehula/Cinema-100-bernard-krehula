@@ -1,7 +1,6 @@
 import "./index.css";
 import type { ReactNode } from 'react';
 
-
 type BtnType = {
   variation?: string;
   type: "button" | "submit" | "reset";
