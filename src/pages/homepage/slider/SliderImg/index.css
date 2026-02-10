@@ -54,6 +54,7 @@
     width: fit-content;
     color: white;
     cursor: pointer;
+    text-decoration: none;
 }
 .movie-card-overlay a:hover{
     background-color: rgba(188, 188, 188, 0.7);

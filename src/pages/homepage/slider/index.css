@@ -25,7 +25,9 @@
     width: 20px;
     height: 1px;
 }
-
+.active{
+    background-color: rgb(213, 33, 33);
+}
 .slider-content{
     display: flex;
     height: fit-content;

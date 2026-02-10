@@ -14,10 +14,12 @@ const Slider = () => {
     queryKey: ["trending-movies"],
     queryFn: () => requestTrendingMovies(),
   });
+  if (!trendingMovies) return;
+
+  const visibleMovies = 4;
+  const totalPages = trendingMovies.length/visibleMovies;
 
   const slideOnClick = (side: string) => {
-    if (!trendingMovies) return;
-
     const visibleItems = 4;
     const itemWidth = 230;
     const gap = 5;
@@ -29,23 +31,35 @@ const Slider = () => {
     const maxTranslate = totalWidth - visibleWidth;
 
     if (side === "right") {
-      setPosition((prev) => (Math.abs(prev) >= maxTranslate ? 0 : prev - step));
+      setActivePage((p) => p + 1);
+      setPosition((prev) => {
+      if (Math.abs(prev) >= maxTranslate) {
+        setActivePage(0);
+        return 0;
+      }
+      return prev - step;
+    });
     }
 
     if (side === "left") {
-      setPosition((prev) => (prev === 0 ? -maxTranslate : prev + step));
+      setActivePage((p) => p - 1);
+      setPosition((prev) => {
+      if (prev === 0) {
+        setActivePage(totalPages - 1);
+        return -maxTranslate;
+      }
+      return prev + step;
+    });
     }
-  };
+  }
   
   return (
     <div className="slider">
       <h2 className="slider-title">Currently trending</h2>
       <div className="active-movie-line">
-        <div className="block"></div>
-        <div className="block"></div>
-        <div className="block"></div>
-        <div className="block"></div>
-        <div className="block"></div>
+        {Array.from({ length: totalPages }).map((_, index) => {
+          return <div key={index} className={`block ${acitvePage === index ? 'active' : ''}`}></div>
+        })}
       </div>
       <div className="slider-content">
         <Btn type="button" onClick={() => slideOnClick("left")}>
