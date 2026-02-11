@@ -7,7 +7,7 @@ type InputType = {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   className?: string;
 };
-
+//Dodati variation umjesto className
 const Input = ({
   type = "text",
   value = "",

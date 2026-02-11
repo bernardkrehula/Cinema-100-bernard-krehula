@@ -14,6 +14,7 @@ const Slider = () => {
     queryKey: ["trending-movies"],
     queryFn: () => requestTrendingMovies(),
   });
+  
   if (!trendingMovies) return;
 
   const visibleMovies = 4;
