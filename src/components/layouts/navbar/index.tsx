@@ -1,6 +1,6 @@
+import Btn from "#/components/ui/btn";
 import "./index.css";
 import { FaPowerOff } from "react-icons/fa6";
-import Btn from "../../ui/btn";
 
 const NavBar = () => {
   return (
