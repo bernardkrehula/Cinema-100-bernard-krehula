@@ -74,7 +74,7 @@ const Slider = () => {
             {trendingMovies?.map((movie) => {
               const { id, image } = movie;
 
-              return <SliderImg key={id} src={image} />;
+              return <SliderImg key={id} src={image} id={id} />;
             })}
           </div>
         </div>

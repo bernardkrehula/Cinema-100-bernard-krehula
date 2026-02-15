@@ -4,11 +4,15 @@ import { IoBookmarkOutline } from "react-icons/io5";
 import Btn from "#/components/ui/btn";
 import { IoBookmark } from "react-icons/io5";
 import { IoSearchOutline } from "react-icons/io5";
+import { useNavigate } from "react-router";
 
-const SliderImg = ({ src }: { src: string }) => {
+const SliderImg = ({ src, id }: { src: string, id: string }) => {
   const [savedMovie, setSavedMovie] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const handleSaveMovie = () => setSavedMovie((prev) => !prev);
+
+  const openMovie = () => navigate(`movie/${id}`);
 
   return (
     <article className="sliderImg">
@@ -20,7 +24,7 @@ const SliderImg = ({ src }: { src: string }) => {
             <IoBookmarkOutline className="unChecked-bookmark" />
           )}
         </Btn>
-        <a href="#">
+        <a onClick={openMovie}>
           See more <IoSearchOutline />
         </a>
       </div>
