@@ -14,11 +14,11 @@ const Slider = () => {
     queryKey: ["trending-movies"],
     queryFn: () => requestTrendingMovies(),
   });
-  
+
   if (!trendingMovies) return;
 
   const visibleMovies = 4;
-  const totalPages = trendingMovies.length/visibleMovies;
+  const totalPages = trendingMovies.length / visibleMovies;
 
   const slideOnClick = (side: string) => {
     const visibleItems = 4;
@@ -34,37 +34,42 @@ const Slider = () => {
     if (side === "right") {
       setActivePage((p) => p + 1);
       setPosition((prev) => {
-      if (Math.abs(prev) >= maxTranslate) {
-        setActivePage(0);
-        return 0;
-      }
-      return prev - step;
-    });
+        if (Math.abs(prev) >= maxTranslate) {
+          setActivePage(0);
+          return 0;
+        }
+        return prev - step;
+      });
     }
 
     if (side === "left") {
       setActivePage((p) => p - 1);
       setPosition((prev) => {
-      if (prev === 0) {
-        setActivePage(totalPages - 1);
-        return -maxTranslate;
-      }
-      return prev + step;
-    });
+        if (prev === 0) {
+          setActivePage(totalPages - 1);
+          return -maxTranslate;
+        }
+        return prev + step;
+      });
     }
-  }
-  
+  };
+
   return (
     <div className="slider">
       <h2 className="slider-title">Currently trending</h2>
       <div className="active-movie-line">
         {Array.from({ length: totalPages }).map((_, index) => {
-          return <div key={index} className={`block ${acitvePage === index ? 'active' : ''}`}></div>
+          return (
+            <div
+              key={index}
+              className={`block ${acitvePage === index ? "active" : ""}`}
+            ></div>
+          );
         })}
       </div>
       <div className="slider-content">
         <Btn type="button" onClick={() => slideOnClick("left")}>
-          <MdKeyboardArrowLeft className="left-arrow"/>
+          <MdKeyboardArrowLeft className="left-arrow" />
         </Btn>
         <div className="slider-box">
           <div
@@ -79,7 +84,7 @@ const Slider = () => {
           </div>
         </div>
         <Btn type="button" onClick={() => slideOnClick("right")}>
-          <MdKeyboardArrowRight className="right-arrow"/>
+          <MdKeyboardArrowRight className="right-arrow" />
         </Btn>
       </div>
     </div>

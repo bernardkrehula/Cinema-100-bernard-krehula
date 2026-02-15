@@ -1,5 +1,5 @@
-import supabase from "../config/supabaseClientVite";
-//Baciti error umjesto samo console.log
+import supabase from "#/config/supabaseClientVite";
+
 export const requestMovies = async () => {
   try {
     const response = await supabase
@@ -8,6 +8,6 @@ export const requestMovies = async () => {
 
     return response.data;
   } catch (error) {
-    console.error(error);
+    throw Error
   }
 };
