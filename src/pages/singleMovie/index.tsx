@@ -33,28 +33,25 @@ const SingleMovie = () => {
     <div className="single-movie" key={id}>
       <NavBar />
       <div className="single-movie-content">
-        <div>
-          <div>
+        <div className="movie-textual-info-top">
+          <div className="movie-title">
             <h1>{title}</h1>
             <span>({year})</span>
           </div>
-          <div>
+          <div className="movie-rating">
             <h2>Imdb rating</h2>
             <span>{rating}</span>
           </div>
-          <div>
+          <div className="movie-rank">
             <h2>Rank</h2>
             <span>{rank}</span>
           </div>
         </div>
-        <div>
+        <div className="movie-frame">
           <img src={image} />
           <iframe
-            width="560"
-            height="315"
             src={trailer}
             title="Movie trailer"
-            frameBorder="0"
             allowFullScreen
           />
         </div>
