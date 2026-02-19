@@ -3,6 +3,7 @@ import "./index.css";
 import { requestSingleMovie } from "#/api/requestSingleMovie";
 import { useQuery } from "@tanstack/react-query";
 import NavBar from "#/components/layouts/navbar";
+import { FaStar } from "react-icons/fa";
 
 const SingleMovie = () => {
   const { movieID } = useParams();
@@ -40,11 +41,12 @@ const SingleMovie = () => {
           </div>
           <div className="movie-rating">
             <h2>Imdb rating</h2>
-            <span>{rating}</span>
+            <FaStar className="rating-star"/>
+            <span>{rating}</span><span className="movie-rating-max-points"> / 10</span>
           </div>
           <div className="movie-rank">
             <h2>Rank</h2>
-            <span>{rank}</span>
+            <span>{rank}</span><span className="movie-rank-max-points"> / 100</span>
           </div>
         </div>
         <div className="movie-frame">
