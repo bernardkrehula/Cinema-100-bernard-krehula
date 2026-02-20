@@ -41,37 +41,42 @@ const SingleMovie = () => {
           </div>
           <div className="movie-rating">
             <h2>Imdb rating</h2>
-            <FaStar className="rating-star"/>
-            <span>{rating}</span><span className="movie-rating-max-points"> / 10</span>
+            <FaStar className="rating-star" />
+            <span>{rating}</span>
+            <span className="movie-rating-max-points"> / 10</span>
           </div>
           <div className="movie-rank">
             <h2>Rank</h2>
-            <span>{rank}</span><span className="movie-rank-max-points"> / 100</span>
+            <span>{rank}</span>
+            <span className="movie-rank-max-points"> / 100</span>
           </div>
         </div>
         <div className="movie-frame">
           <img src={image} />
-          <iframe
-            src={trailer}
-            title="Movie trailer"
-            allowFullScreen
-          />
+          <iframe src={trailer} title="Movie trailer" allowFullScreen />
         </div>
-        <article>
-          <ul>
+        <article className="movie-textual-info-bottom">
+          <ul className="genre">
             {convertedGenre.map((type: string, index: number) => (
-              <li key={index}>{type}</li>
+              <li key={index}>
+                {type}
+                {index < convertedGenre.length - 1 && <span>,&nbsp;</span>}
+              </li>
             ))}
           </ul>
-          <p>{description}</p>
+          <p className="genre-description">{description}</p>
+          <hr />
           <dl>
-            <dt>Director</dt>
-            <dd>{convertedDirector}</dd>
+            <dt className="director">Director</dt>
+            <dd className="director-info">{convertedDirector}</dd>
             <hr />
-            <dt>Writers</dt>
-            <ul>
+            <dt className="writers">Writers</dt>
+            <ul className="writers-info">
               {convertedWriters.map((type: string, index: number) => (
-                <li key={index}>{type}</li>
+                <li key={index}>
+                  {type}
+                  {index < convertedWriters.length - 1 && <span>,&nbsp;</span>}
+                </li>
               ))}
             </ul>
           </dl>
