@@ -4,6 +4,7 @@ import { requestSingleMovie } from "#/api/requestSingleMovie";
 import { useQuery } from "@tanstack/react-query";
 import NavBar from "#/components/layouts/navbar";
 import { FaStar } from "react-icons/fa";
+import SliderImg from "../homepage/slider/SliderImg";
 
 const SingleMovie = () => {
   const { movieID } = useParams();
@@ -52,7 +53,7 @@ const SingleMovie = () => {
           </div>
         </div>
         <div className="movie-frame">
-          <img src={image} />
+          <SliderImg src={image} />
           <iframe src={trailer} title="Movie trailer" allowFullScreen />
         </div>
         <article className="movie-textual-info-bottom">
@@ -75,7 +76,6 @@ const SingleMovie = () => {
               {convertedWriters.map((type: string, index: number) => (
                 <li key={index}>
                   {type}
-                  {index < convertedWriters.length - 1 && <span>,&nbsp;</span>}
                 </li>
               ))}
             </ul>
