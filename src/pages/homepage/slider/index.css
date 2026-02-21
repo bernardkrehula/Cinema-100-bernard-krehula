@@ -27,6 +27,8 @@
 }
 .active{
     background-color: rgb(213, 33, 33);
+    margin-top: -2px;
+    height: 3px;
 }
 .slider-content{
     display: flex;
@@ -36,7 +38,7 @@
 .slider-box{
     display: flex;
     overflow: hidden;
-    height: 450px;
+    height: fit-content;
     width: 938px;
 }
 .slider-box-content{

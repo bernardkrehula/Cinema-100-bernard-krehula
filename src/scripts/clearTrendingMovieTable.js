@@ -1,12 +1,13 @@
 import supabase from "../config/supabaseClientNode.js";
 
-export const clearMovieTables = async () => {
+const clearTrendingMovieTables = async () => {
   try {
     const { data } = await supabase
-    .rpc("clear_movies_table") 
+    .rpc("clear_trending_movies_table") 
       
     return data;
   } catch (error) {
     console.log(error);
   }
 };
+export default clearTrendingMovieTables;

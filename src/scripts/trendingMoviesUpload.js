@@ -1,5 +1,6 @@
 import dataJs from "../data/dataJs.js";
 import supabase from "../config/supabaseClientNode.js";
+import clearTrendingMovieTables from "./clearTrendingMovieTable.js";
 
 const getRandomMovies = () => {
   const randomMovies = [...dataJs].sort(() => 0.5 - Math.random());
@@ -7,6 +8,7 @@ const getRandomMovies = () => {
 }
 
 const trendingMoviesUpload = async () => {
+    clearTrendingMovieTables();
     const trendingMovies = getRandomMovies();
     try {
     const { data, error } = await supabase

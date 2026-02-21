@@ -4,8 +4,8 @@
 .sliderImg img{
     position: relative;  
     cursor: pointer;
-    width: fit-content;
     height: 100%;
+    object-fit: cover;
 }
 .movie-card-overlay{
     opacity: 0;
