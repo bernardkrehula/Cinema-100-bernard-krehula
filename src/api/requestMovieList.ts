@@ -5,9 +5,9 @@ export const reuqestMovieList = async(movieRange: {from: number, to: number}) =>
     try{
         const { data } = await supabase
         .from("movies")
-        .select("*")
+        .select("id, image")
         .range(from, to);
-        console.log(data)
+        console.log(data) 
         return data;
     }
     catch(error){
