@@ -4,7 +4,7 @@ export const requestMovies = async () => {
   try {
     const { data } = await supabase
     .from("movies")
-    .select();
+    .select("length")
 
     return data;
   } catch (error) {
