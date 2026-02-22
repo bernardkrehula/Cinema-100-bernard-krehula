@@ -1,0 +1,6 @@
+.movie-list span{
+    font-size: 2rem;
+    text-align: center;
+    margin-left: 5px;
+    width: fit-content;
+}

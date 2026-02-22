@@ -1,11 +1,12 @@
 import supabase from "#/config/supabaseClientVite";
 
-export const reuqestMovieList = async() => {
+export const reuqestMovieList = async(movieRange: {from: number, to: number}) => {
+    const {from, to} = movieRange;
     try{
         const { data } = await supabase
         .from("movies")
         .select("*")
-        .range(0, 9);
+        .range(from, to);
         console.log(data)
         return data;
     }

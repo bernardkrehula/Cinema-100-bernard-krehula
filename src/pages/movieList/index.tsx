@@ -16,7 +16,7 @@ const MovieList = () => {
       const movieNum = Math.ceil(movieColumnlength / visibleMoviesNum);
       const list = [];
 
-      for (let i = 0; i <= movieNum; i++) {
+      for (let i = 1; i <= movieNum; i++) {
         list.push(i);
       }
       setMoviePageNumbers(list);
@@ -30,12 +30,15 @@ const MovieList = () => {
     const moviePage = Number((e.target as HTMLSpanElement).textContent);
     let indexRange = { from: 0, to: 11 };
     if (moviePage != 1) {
-      indexRange.from += 12 * moviePage;
-      indexRange.to += 12 * moviePage;
-    } else {
+      indexRange.from = 12 * (moviePage - 1);
+      indexRange.to = indexRange.to * moviePage + 1;
+    }
+    else {
       indexRange.from = 0;
       indexRange.to = 11;
     }
+    reuqestMovieList(indexRange);
+
   };
 
   return (
