@@ -1,4 +1,5 @@
 import NavBar from "#/components/layouts/navbar";
+import MovieList from "../movieList";
 import "./index.css";
 import Slider from "./slider";
 
@@ -9,6 +10,7 @@ const Homepage = () => {
     <div className="homepage">
       <NavBar />
       <Slider />
+      <MovieList />
     </div>
   );
 };
