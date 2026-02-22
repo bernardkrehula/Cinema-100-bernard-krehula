@@ -27,6 +27,7 @@ const SingleMovie = () => {
     rating,
     year,
   } = movie;
+  
   const convertedGenre = JSON.parse(genre);
   const convertedDirector = JSON.parse(director);
   const convertedWriters = JSON.parse(writers);
