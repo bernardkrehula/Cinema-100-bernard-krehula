@@ -10,11 +10,11 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 
 const MovieList = () => {
   const [moviePageNumbers, setMoviePageNumbers] = useState<number[]>([0]);
-  const movieRange = useRef<{ from: number; to: number }>({ from: 0, to: 11 });
+  const [movieRange, setMovieRange] = useState<{ from: number; to: number }>({ from: 0, to: 11 });
   const [currentMoviePage, setCurrentMoviePage] = useState<number>(0);
   const { data: moviePages } = useQuery({
     queryKey: ["movie-pages", currentMoviePage],
-    queryFn: () => reuqestMovieList(movieRange.current),
+    queryFn: () => reuqestMovieList(movieRange),
   });
 
   const getMovieListNumber = async () => {
@@ -41,13 +41,35 @@ const MovieList = () => {
     let indexRange = { from: 0, to: 11 };
     if (page != 1) {
       indexRange.from = 12 * (page - 1);
-      indexRange.to = indexRange.to * page + 1;
+      indexRange.to = indexRange.from + 11;
     } else {
       indexRange.from = 0;
       indexRange.to = 11;
     }
-    movieRange.current = indexRange;
+    setMovieRange(indexRange);
   };
+  const leftArrowClick = () => {
+    setMovieRange(prev => {
+      if(prev.from > 0){
+        return  {
+          from: prev.from - 12,
+          to: prev.to - 12
+      }
+      }
+      return prev;
+    })
+  }
+  const rightArrowClick = () => {
+    setMovieRange(prev => {
+      if(prev.from > 0){
+        return  {
+          from: prev.from - 12,
+          to: prev.to - 12
+      }
+      }
+      return prev;
+    })
+  }
 
   return (
     <div className="movie-list">
@@ -57,7 +79,7 @@ const MovieList = () => {
         })}
       </div>
       <div className="list-numbers">
-        <Btn type="button" variation="primary-large">
+        <Btn type="button" variation="primary-large" onClick={leftArrowClick}> 
           <MdKeyboardArrowLeft />
         </Btn>
         {moviePageNumbers.map((page) => {
@@ -72,7 +94,7 @@ const MovieList = () => {
             </Btn>
           );
         })}
-        <Btn type="button" variation="primary-large nav-arrow">
+        <Btn type="button" variation="primary-large" onClick={rightArrowClick}>
           <MdKeyboardArrowRight />
         </Btn>
       </div>
