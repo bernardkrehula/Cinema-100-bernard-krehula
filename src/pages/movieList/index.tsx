@@ -4,12 +4,16 @@ import { reuqestMovieList } from "#/api/requestMovieList";
 import { requestMoviesArrayLength } from "#/api/requestMoviesArrayLength";
 import { useQuery } from "@tanstack/react-query";
 import MovieIcon from "./MovieIcon";
+import Btn from "#/components/ui/btn";
+import { MdKeyboardArrowLeft } from "react-icons/md";
+import { MdKeyboardArrowRight } from "react-icons/md";
 
 const MovieList = () => {
   const [moviePageNumbers, setMoviePageNumbers] = useState<number[]>([0]);
   const movieRange = useRef<{ from: number; to: number }>({ from: 0, to: 11 });
+  const [currentMoviePage, setCurrentMoviePage] = useState<number>(0);
   const { data: moviePages } = useQuery({
-    queryKey: ["movie-pages"],
+    queryKey: ["movie-pages", currentMoviePage],
     queryFn: () => reuqestMovieList(movieRange.current),
   });
 
@@ -31,34 +35,47 @@ const MovieList = () => {
     getMovieListNumber();
   }, []);
 
-  const calculateMovieRange = (e: React.MouseEvent<HTMLSpanElement>) => {
-    const moviePage = Number((e.target as HTMLSpanElement).textContent);
+  const calculateMovieRange = (page: number) => {
+    setCurrentMoviePage(page);
+
     let indexRange = { from: 0, to: 11 };
-    if (moviePage != 1) {
-      indexRange.from = 12 * (moviePage - 1);
-      indexRange.to = indexRange.to * moviePage + 1;
+    if (page != 1) {
+      indexRange.from = 12 * (page - 1);
+      indexRange.to = indexRange.to * page + 1;
     } else {
       indexRange.from = 0;
       indexRange.to = 11;
     }
     movieRange.current = indexRange;
   };
-  if (!moviePages) return null;
 
   return (
     <div className="movie-list">
       <div className="movie-list-content">
-        {moviePages.map((page, index) => {
+        {moviePages?.map((page, index) => {
           return <MovieIcon key={index} {...page} />;
         })}
       </div>
-      {moviePageNumbers.map((page) => {
-        return (
-          <span key={page} onClick={calculateMovieRange}>
-            {page}
-          </span>
-        );
-      })}
+      <div className="list-numbers">
+        <Btn type="button" variation="primary-large">
+          <MdKeyboardArrowLeft />
+        </Btn>
+        {moviePageNumbers.map((page) => {
+          return (
+            <Btn
+              type="button"
+              variation="primary-large"
+              key={page}
+              onClick={() => calculateMovieRange(page)}
+            >
+              {page}
+            </Btn>
+          );
+        })}
+        <Btn type="button" variation="primary-large nav-arrow">
+          <MdKeyboardArrowRight />
+        </Btn>
+      </div>
     </div>
   );
 };

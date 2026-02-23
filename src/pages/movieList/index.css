@@ -22,3 +22,22 @@
     margin-left: 5px;
     width: fit-content;
 }
+.list-numbers{
+    display: flex;
+    margin: 20px auto;
+    gap: 10px;
+    background-color: white;
+    padding: 5px 6px; 
+    border-radius: 50px;
+   
+}
+.list-numbers svg{
+    color: rgb(0, 0, 0, 0.75);
+    height: 20px;
+    width: 20px;
+    margin-top: 3px;
+    transition: 0.3s all;
+}
+.list-numbers button:hover svg{
+    color: rgba(255, 255, 255, 0.75);
+}

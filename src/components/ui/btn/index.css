@@ -4,3 +4,16 @@
     cursor: pointer;
     color: white;
 }
+.primary-large{
+    color: rgb(0, 0, 0, 0.75);
+    background-color: rgb(255, 255, 255, 0.75);
+    border-radius: 100%;
+    width: 40px;
+    height: 40px;
+    transition: 0.3s all;
+    font-size: 1.6rem;
+}
+.primary-large:hover {
+    background-color: var(--nav--bg);
+    color: white;
+}

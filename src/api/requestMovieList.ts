@@ -7,7 +7,7 @@ export const reuqestMovieList = async (movieRange: {
   const { from, to } = movieRange;
   try {
     const { data } = await supabase.from("movies").select("*").range(from, to);
-
+    console.log(data)
     return data;
   } catch (error) {
     throw Error;
