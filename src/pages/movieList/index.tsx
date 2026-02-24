@@ -10,8 +10,12 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 
 const MovieList = () => {
   const [moviePageNumbers, setMoviePageNumbers] = useState<number[]>([0]);
-  const [movieRange, setMovieRange] = useState<{ from: number; to: number }>({ from: 0, to: 11 });
+  const [movieRange, setMovieRange] = useState<{ from: number; to: number }>({
+    from: 0,
+    to: 11,
+  });
   const [currentMoviePage, setCurrentMoviePage] = useState<number>(0);
+  const [activepage, setactivepage] = useState<number>(0);
   const { data: moviePages } = useQuery({
     queryKey: ["movie-pages", currentMoviePage],
     queryFn: () => reuqestMovieList(movieRange),
@@ -49,28 +53,36 @@ const MovieList = () => {
     setMovieRange(indexRange);
   };
   const leftArrowClick = () => {
-    setMovieRange(prev => {
-      if(prev.from > 0){
-        return  {
+    setMovieRange((prev) => {
+      if (prev.from > 0) {
+        return {
           from: prev.from - 12,
-          to: prev.to - 12
-      }
+          to: prev.to - 12,
+        };
       }
       return prev;
-    })
-  }
+    });
+    setCurrentMoviePage((prev) => {
+      if (prev > 1) return prev - 1;
+      return prev;
+    });
+  };
   const rightArrowClick = () => {
-    setMovieRange(prev => {
-      if(prev.from > 0){
-        return  {
-          from: prev.from - 12,
-          to: prev.to - 12
-      }
+    setMovieRange((prev) => {
+      if (prev.from === 0 && prev.to < 100) {
+        return {
+          from: prev.from + 12,
+          to: prev.to + 12,
+        };
       }
       return prev;
-    })
-  }
-
+    });
+    setCurrentMoviePage((prev) => {
+      if (prev < 9) return prev + 1;
+      return prev;
+    });
+  };
+  
   return (
     <div className="movie-list">
       <div className="movie-list-content">
@@ -79,16 +91,19 @@ const MovieList = () => {
         })}
       </div>
       <div className="list-numbers">
-        <Btn type="button" variation="primary-large" onClick={leftArrowClick}> 
+        <Btn type="button" variation="primary-large" onClick={leftArrowClick}>
           <MdKeyboardArrowLeft />
         </Btn>
         {moviePageNumbers.map((page) => {
           return (
             <Btn
               type="button"
-              variation="primary-large"
+              variation={`primary-large ${activepage === page ? "active-page" : ""}`}
               key={page}
-              onClick={() => calculateMovieRange(page)}
+              onClick={() => {
+                calculateMovieRange(page);
+                setSelectedPage(page)
+              }}
             >
               {page}
             </Btn>

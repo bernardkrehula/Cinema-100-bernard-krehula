@@ -9,12 +9,8 @@
     grid-template-rows: repeat(3, 1fr);
     grid-template-columns: repeat(4, 1fr);
     column-gap: 10px;
+    row-gap: 50px;
     width: 1050px;
-}
-.movie-list-content img{
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
 }
 .movie-list span{
     font-size: 2rem;
