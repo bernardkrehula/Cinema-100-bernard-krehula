@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import "./index.css";
 import { reuqestMovieList } from "#/api/requestMovieList";
 import { requestMoviesArrayLength } from "#/api/requestMoviesArrayLength";
@@ -14,8 +14,7 @@ const MovieList = () => {
     from: 0,
     to: 11,
   });
-  const [currentMoviePage, setCurrentMoviePage] = useState<number>(0);
-  const [activepage, setactivepage] = useState<number>(0);
+  const [currentMoviePage, setCurrentMoviePage] = useState<number>(1);
   const { data: moviePages } = useQuery({
     queryKey: ["movie-pages", currentMoviePage],
     queryFn: () => reuqestMovieList(movieRange),
@@ -69,7 +68,7 @@ const MovieList = () => {
   };
   const rightArrowClick = () => {
     setMovieRange((prev) => {
-      if (prev.from === 0 && prev.to < 100) {
+      if (prev.from >= 0 && prev.to < 100) {
         return {
           from: prev.from + 12,
           to: prev.to + 12,
@@ -98,11 +97,11 @@ const MovieList = () => {
           return (
             <Btn
               type="button"
-              variation={`primary-large ${activepage === page ? "active-page" : ""}`}
+              variation={`primary-large ${currentMoviePage === page ? "active-page" : ""}`}
               key={page}
               onClick={() => {
                 calculateMovieRange(page);
-                setSelectedPage(page)
+                setCurrentMoviePage(page)
               }}
             >
               {page}

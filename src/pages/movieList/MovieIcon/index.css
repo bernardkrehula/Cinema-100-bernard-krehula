@@ -43,5 +43,6 @@
   height: fit-content;
 }
 .active-page{
-    background-color: brown;
+    background-color: rgb(197, 32, 32);
+    color: white;
 }
