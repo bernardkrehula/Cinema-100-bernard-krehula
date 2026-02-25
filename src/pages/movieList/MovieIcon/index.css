@@ -1,20 +1,22 @@
 .movie-icon {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   min-height: 450px;
 }
 .movie-icon img {
   width: 100%;
-  aspect-ratio: 2 / 3;
   object-fit: cover;
-  display: block;
+  height: 377px !important;
 }
 .movie-icon h3 {
   margin-top: 5px;
   color: rgb(255, 255, 255);
   font-size: 1.6rem;
-  margin-bottom: 2px;
+  margin-bottom: 5px;
+  white-space: nowrap;  
+  overflow: hidden;      
+  text-overflow: ellipsis;
+  max-width: 255px;
 }
 .movie-icon-info {
   display: flex;
@@ -42,7 +44,7 @@
   font-size: 1.4rem;
   height: fit-content;
 }
-.active-page{
-    background-color: rgb(197, 32, 32);
-    color: white;
+.active-page {
+  background-color: rgb(197, 32, 32);
+  color: white;
 }
