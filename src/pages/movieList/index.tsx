@@ -17,7 +17,7 @@ const MovieList = () => {
   const [currentMoviePage, setCurrentMoviePage] = useState<number>(1);
   const { data: moviePages } = useQuery({
     queryKey: ["movie-pages", currentMoviePage],
-    queryFn: () => reuqestMovieList(movieRange),
+    queryFn: () => reuqestMovieList(movieRange)
   });
 
   const getMovieListNumber = async () => {

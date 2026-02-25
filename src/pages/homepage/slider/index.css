@@ -32,19 +32,19 @@
 }
 .slider-content{
     display: flex;
-    height: 300px;
+    height: 450px;
     width: fit-content;
 }
 .slider-box{
     display: flex;
     overflow: hidden;
     height: fit-content;
-    width: 938px;
+    width: 1232px;
 }
 .slider-box-content{
     display: flex;
     gap: 5px;
-    height: 340px;
+    height: 450px;
     transition: transform 600ms ease-out;
 }
 .left-arrow, .right-arrow{

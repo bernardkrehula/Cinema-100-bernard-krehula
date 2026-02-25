@@ -22,7 +22,7 @@ const Slider = () => {
 
   const slideOnClick = (side: string) => {
     const visibleItems = 4;
-    const itemWidth = 229.89;
+    const itemWidth = 304.26;
     const gap = 5;
 
     const step = visibleItems * (itemWidth + gap);

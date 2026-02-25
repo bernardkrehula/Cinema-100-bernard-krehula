@@ -6,7 +6,6 @@
 .movie-icon img {
   width: 100%;
   object-fit: cover;
-  height: 377px !important;
 }
 .movie-icon h3 {
   margin-top: 5px;
