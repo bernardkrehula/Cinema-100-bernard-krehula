@@ -1,4 +1,5 @@
 import NavBar from "#/components/layouts/navbar";
+import SearchBar from "#/components/ui/searchBar";
 import MovieList from "../movieList";
 import "./index.css";
 import Slider from "./slider";
@@ -10,6 +11,7 @@ const Homepage = () => {
     <div className="homepage">
       <NavBar />
       <Slider />
+      <SearchBar />
       <MovieList />
     </div>
   );
