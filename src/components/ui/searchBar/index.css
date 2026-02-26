@@ -1,0 +1,22 @@
+.searchbar{
+    display: flex;
+    align-items: center;
+    background-color: white;
+    width: fit-content;
+    height: 40px;
+}
+.searchbar input{
+    border: none;
+    height: 100%;
+    flex: 1;
+    padding-left: 10px;
+}
+.searchbar button{
+    background-color: rgb(91, 91, 91);
+    padding: 4px 10px;
+}
+.searchbar svg{
+    color: black;
+    height: 30px;
+    width: 30px;
+}
