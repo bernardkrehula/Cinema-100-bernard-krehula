@@ -4,6 +4,8 @@
     background-color: white;
     width: fit-content;
     height: 40px;
+    margin-right: auto;
+    margin-left: 10px;
 }
 .searchbar input{
     border: none;
