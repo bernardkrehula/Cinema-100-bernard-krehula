@@ -7,7 +7,7 @@ type MovieIconType = {
   title: string;
   imdbid: string;
   rank: number;
-  genre: string;
+  genre: string[];
   description: string;
   director: string;
   writers: string;
@@ -20,7 +20,7 @@ type MovieIconType = {
 
 const MovieIcon = (page: MovieIconType) => {
   const { id, image, title, year, rating, genre } = page;
-  const convertedGenre = JSON.parse(genre);
+
   return (
     <div className="movie-icon">
       <SliderImg id={id} src={image} />
@@ -30,10 +30,9 @@ const MovieIcon = (page: MovieIconType) => {
         <FaStar className="rating-star" />
         <h4>{rating}</h4>
         <ul>
-          {convertedGenre.map((type: string, index: number) => (
+          {genre.map((type: string, index: number) => (
             <li key={index}>
               {type}
-              {/* {index < convertedGenre.length - 1 && <span>,&nbsp;</span>} */}
             </li>
           ))}
         </ul>

@@ -24,3 +24,6 @@ How to make paggination in supabase
 Odraiti da se filmovi na brojeve i strelice pozivaju po 10 filmova
 
 3.1 napraviti movieTool bar naci da ima search bar spremljene filmove, rating i da mozes odabrati zanr
+
+5.3
+Otkriti kako filtrirati po zanru filmove request koji treba poslati kako postaviti

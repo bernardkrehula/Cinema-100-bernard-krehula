@@ -1,21 +1,23 @@
 import "./index.css";
 import SearchBar from "#/components/ui/searchBar";
-import { useEffect, useState } from "react";
+import { useEffect, useState, MouseEventHandler } from "react";
 import { requestSingleMovie } from "#/api/requestSingleMovie";
 import Btn from "#/components/ui/btn";
 import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 import { FaHouse } from "react-icons/fa6";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { reuqestMovieByGenre } from "#/api/requestMovieByGenre";
+import { requestGenreTypes } from "#/api/requestGenreTypes";
 
 const MovieToolbar = () => {
-  const [options, setOptions] = useState<string[]>([]);
+  const [genres, setGenres] = useState<string[]>([]);
   const [savedMovies, setSavedMovies] = useState<boolean>(false);
   const [selectHomepage, setSelectHomepage] = useState<boolean>(false);
 
   const handleOptions = async () => {
-    const movieSearch = await requestSingleMovie("top1");
-    setOptions(Object.keys(movieSearch));
-  };
+    const movieGenre = await requestGenreTypes();
+/*     setGenres(Object.keys(movieGenre));
+ */  };
 
   useEffect(() => {
     handleOptions();
@@ -29,14 +31,22 @@ const MovieToolbar = () => {
     setSelectHomepage(true);
     setSavedMovies(false);
   };
-
+  const handleMovieFilter = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const filterValue = e.target.value;
+    await reuqestMovieByGenre(filterValue);
+  };
+ 
   return (
     <div className="movie-tool-bar">
       <SearchBar placeholder="Search" value="" />
       <label className="movie-options-parent">
-        <select id="movie-genre-filter" className="movie-options">
-          {options.map((opt) => {
-            return <option value={opt}>{opt}</option>;
+        <select id="movie-genre-filter" className="movie-options" onChange={handleMovieFilter}>
+          {genres.map((genre, index) => {
+            return (
+              <option key={index} value={genre}>
+                {genre}
+              </option>
+            );
           })}
         </select>
         <div className="movie-options-arrow">

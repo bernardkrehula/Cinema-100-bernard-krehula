@@ -17,7 +17,6 @@ const SearchBar = ({value, placeholder}: SearchBarType) => {
         setInputValue(value);
     }
     
-
     return(
         <div className='searchbar'>
             <input placeholder={placeholder} value={inputValue} onChange={handleInputValue}/>

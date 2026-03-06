@@ -28,10 +28,6 @@ const SingleMovie = () => {
     year,
   } = movie;
   
-  const convertedGenre = JSON.parse(genre);
-  const convertedDirector = JSON.parse(director);
-  const convertedWriters = JSON.parse(writers);
-
   return (
     <div className="single-movie" key={id}>
       <NavBar />
@@ -59,10 +55,10 @@ const SingleMovie = () => {
         </div>
         <article className="movie-textual-info-bottom">
           <ul className="genre">
-            {convertedGenre.map((type: string, index: number) => (
+            {genre.map((type: string, index: number) => (
               <li key={index}>
                 {type}
-                {index < convertedGenre.length - 1 && <span>,&nbsp;</span>}
+                {index < genre.length - 1 && <span>,&nbsp;</span>}
               </li>
             ))}
           </ul>
@@ -70,11 +66,11 @@ const SingleMovie = () => {
           <hr />
           <dl>
             <dt className="director">Director</dt>
-            <dd className="director-info">{convertedDirector}</dd>
+            <dd className="director-info">{director}</dd>
             <hr />
             <dt className="writers">Writers</dt>
             <ul className="writers-info">
-              {convertedWriters.map((type: string, index: number) => (
+              {writers.map((type: string, index: number) => (
                 <li key={index}>
                   {type}
                 </li>
