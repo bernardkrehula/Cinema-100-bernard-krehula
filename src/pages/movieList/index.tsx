@@ -7,6 +7,8 @@ import MovieIcon from "./MovieIcon";
 import Btn from "#/components/ui/btn";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import MovieToolbar from "#/components/layouts/movieToolbar";
+import { reuqestMovieByGenre } from "#/api/requestMovieByGenre";
 
 const MovieList = () => {
   const [moviePageNumbers, setMoviePageNumbers] = useState<number[]>([0]);
@@ -15,10 +17,16 @@ const MovieList = () => {
     to: 11,
   });
   const [currentMoviePage, setCurrentMoviePage] = useState<number>(1);
+  const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
   const { data: moviePages } = useQuery({
-    queryKey: ["movie-pages", currentMoviePage],
-    queryFn: () => reuqestMovieList(movieRange)
+    queryKey: ["movie-pages", currentMoviePage, selectedGenre],
+    queryFn: () => handleMovieRequests(),
   });
+
+  const handleMovieRequests = () => {
+    if (selectedGenre) return reuqestMovieByGenre(selectedGenre);
+    return reuqestMovieList(movieRange);
+  };
 
   const getMovieListNumber = async () => {
     const movieColumnlength = await requestMoviesArrayLength();
@@ -81,9 +89,10 @@ const MovieList = () => {
       return prev;
     });
   };
-  
+
   return (
     <div className="movie-list">
+      <MovieToolbar setSelectedGenre={setSelectedGenre}/>
       <div className="movie-list-content">
         {moviePages?.map((page, index) => {
           return <MovieIcon key={index} {...page} />;
@@ -101,7 +110,7 @@ const MovieList = () => {
               key={page}
               onClick={() => {
                 calculateMovieRange(page);
-                setCurrentMoviePage(page)
+                setCurrentMoviePage(page);
               }}
             >
               {page}

@@ -5,7 +5,6 @@ export const requestGenreTypes = async () => {
     const { data } = await supabase
     .from("movies")
     .select("genre")
-    console.log(data)
     return data;
   } catch (error) {
     throw Error

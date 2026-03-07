@@ -1,7 +1,6 @@
 import "./index.css";
 import SearchBar from "#/components/ui/searchBar";
-import { useEffect, useState, MouseEventHandler } from "react";
-import { requestSingleMovie } from "#/api/requestSingleMovie";
+import { useEffect, useState } from "react";
 import Btn from "#/components/ui/btn";
 import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 import { FaHouse } from "react-icons/fa6";
@@ -9,21 +8,25 @@ import { IoMdArrowDropdown } from "react-icons/io";
 import { reuqestMovieByGenre } from "#/api/requestMovieByGenre";
 import { requestGenreTypes } from "#/api/requestGenreTypes";
 
-const MovieToolbar = () => {
+type GenresType = { genre: string[] }[];
+
+const MovieToolbar = ({setSelectedGenre}: {setSelectedGenre: (value: string) => void}) => {
   const [genres, setGenres] = useState<string[]>([]);
   const [savedMovies, setSavedMovies] = useState<boolean>(false);
   const [selectHomepage, setSelectHomepage] = useState<boolean>(false);
 
   const handleOptions = async () => {
     const movieGenre = await requestGenreTypes();
-    if(movieGenre) getMovieGenres(movieGenre);
-/*     setGenres(Object.keys(movieGenre));
- */  };
-  const getFilteredMovieGenres = (movieGenre) => {
+    if (movieGenre) getFilteredMovieGenres(movieGenre);
+  };
+  const getFilteredMovieGenres = (movieGenre: GenresType) => {
     let allGenres: string[] = [];
-    const genres = movieGenre.flatMap(({genre}: {genre: string[]}) => genre)
-    allGenres = [...new Set(genres)] as string[]
-  }
+    const genres = movieGenre.flatMap(
+      ({ genre }: { genre: string[] }) => genre,
+    );
+    allGenres = [...new Set(genres)] as string[];
+    setGenres(allGenres);
+  };
 
   useEffect(() => {
     handleOptions();
@@ -39,14 +42,18 @@ const MovieToolbar = () => {
   };
   const handleMovieFilter = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const filterValue = e.target.value;
-    await reuqestMovieByGenre(filterValue);
+    setSelectedGenre(filterValue);
   };
- 
+
   return (
     <div className="movie-tool-bar">
       <SearchBar placeholder="Search" value="" />
       <label className="movie-options-parent">
-        <select id="movie-genre-filter" className="movie-options" onChange={handleMovieFilter}>
+        <select
+          id="movie-genre-filter"
+          className="movie-options"
+          onChange={handleMovieFilter}
+        >
           {genres.map((genre, index) => {
             return (
               <option key={index} value={genre}>

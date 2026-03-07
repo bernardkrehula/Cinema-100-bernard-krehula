@@ -27,7 +27,7 @@ const SingleMovie = () => {
     rating,
     year,
   } = movie;
-  
+
   return (
     <div className="single-movie" key={id}>
       <NavBar />
@@ -71,9 +71,7 @@ const SingleMovie = () => {
             <dt className="writers">Writers</dt>
             <ul className="writers-info">
               {writers.map((type: string, index: number) => (
-                <li key={index}>
-                  {type}
-                </li>
+                <li key={index}>{type}</li>
               ))}
             </ul>
           </dl>
