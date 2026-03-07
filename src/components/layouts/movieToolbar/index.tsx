@@ -16,8 +16,14 @@ const MovieToolbar = () => {
 
   const handleOptions = async () => {
     const movieGenre = await requestGenreTypes();
+    if(movieGenre) getMovieGenres(movieGenre);
 /*     setGenres(Object.keys(movieGenre));
  */  };
+  const getFilteredMovieGenres = (movieGenre) => {
+    let allGenres: string[] = [];
+    const genres = movieGenre.flatMap(({genre}: {genre: string[]}) => genre)
+    allGenres = [...new Set(genres)] as string[]
+  }
 
   useEffect(() => {
     handleOptions();
