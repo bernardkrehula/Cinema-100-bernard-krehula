@@ -12,6 +12,9 @@
     row-gap: 10px;
     width: 1050px;
 }
+.movie-list-content li:nth-child(n+17) {
+  display: none;
+}
 .movie-list span{
     font-size: 2rem;
     text-align: center;

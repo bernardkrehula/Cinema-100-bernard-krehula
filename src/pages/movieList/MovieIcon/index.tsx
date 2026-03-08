@@ -22,7 +22,7 @@ const MovieIcon = (page: MovieIconType) => {
   const { id, image, title, year, rating, genre } = page;
 
   return (
-    <div className="movie-icon">
+    <li className="movie-icon">
       <SliderImg id={id} src={image} />
       <h3>{title}</h3>
       <div className="movie-icon-info">
@@ -37,7 +37,7 @@ const MovieIcon = (page: MovieIconType) => {
           ))}
         </ul>
       </div>
-    </div>
+    </li>
   );
 };
 export default MovieIcon;

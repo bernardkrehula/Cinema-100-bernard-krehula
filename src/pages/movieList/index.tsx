@@ -24,12 +24,15 @@ const MovieList = () => {
   });
 
   const handleMovieRequests = () => {
+    getMovieListNumber();
     if (selectedGenre) return reuqestMovieByGenre(selectedGenre);
     return reuqestMovieList(movieRange);
   };
 
   const getMovieListNumber = async () => {
-    const movieColumnlength = await requestMoviesArrayLength();
+    let movieColumnlength;
+    if(selectedGenre) movieColumnlength = moviePages?.length
+    else movieColumnlength = await requestMoviesArrayLength();
     const visibleMoviesNum = 12;
 
     if (movieColumnlength) {
@@ -41,6 +44,8 @@ const MovieList = () => {
       }
       setMoviePageNumbers(list);
     }
+    console.log(moviePages?.length)
+
   };
   useEffect(() => {
     getMovieListNumber();
@@ -92,35 +97,41 @@ const MovieList = () => {
 
   return (
     <div className="movie-list">
-      <MovieToolbar setSelectedGenre={setSelectedGenre}/>
-      <div className="movie-list-content">
+      <MovieToolbar setSelectedGenre={setSelectedGenre} />
+      <ul className="movie-list-content">
         {moviePages?.map((page, index) => {
           return <MovieIcon key={index} {...page} />;
         })}
-      </div>
-      <div className="list-numbers">
-        <Btn type="button" variation="primary-large" onClick={leftArrowClick}>
-          <MdKeyboardArrowLeft />
-        </Btn>
-        {moviePageNumbers.map((page) => {
-          return (
-            <Btn
-              type="button"
-              variation={`primary-large ${currentMoviePage === page ? "active-page" : ""}`}
-              key={page}
-              onClick={() => {
-                calculateMovieRange(page);
-                setCurrentMoviePage(page);
-              }}
-            >
-              {page}
-            </Btn>
-          );
-        })}
-        <Btn type="button" variation="primary-large" onClick={rightArrowClick}>
-          <MdKeyboardArrowRight />
-        </Btn>
-      </div>
+      </ul>
+      {moviePageNumbers.length > 1 && (
+        <div className="list-numbers">
+          <Btn type="button" variation="primary-large" onClick={leftArrowClick}>
+            <MdKeyboardArrowLeft />
+          </Btn>
+          {moviePageNumbers.map((page) => {
+            return (
+              <Btn
+                type="button"
+                variation={`primary-large ${currentMoviePage === page ? "active-page" : ""}`}
+                key={page}
+                onClick={() => {
+                  calculateMovieRange(page);
+                  setCurrentMoviePage(page);
+                }}
+              >
+                {page}
+              </Btn>
+            );
+          })}
+          <Btn
+            type="button"
+            variation="primary-large"
+            onClick={rightArrowClick}
+          >
+            <MdKeyboardArrowRight />
+          </Btn>
+        </div>
+      )}
     </div>
   );
 };
