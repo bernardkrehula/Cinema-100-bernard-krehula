@@ -5,7 +5,6 @@ import Btn from "#/components/ui/btn";
 import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 import { FaHouse } from "react-icons/fa6";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { reuqestMovieByGenre } from "#/api/requestMovieByGenre";
 import { requestGenreTypes } from "#/api/requestGenreTypes";
 
 type GenresType = { genre: string[] }[];

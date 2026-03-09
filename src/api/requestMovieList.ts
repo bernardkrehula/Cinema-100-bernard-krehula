@@ -6,8 +6,8 @@ export const reuqestMovieList = async (movieRange: {
 }) => {
   const { from, to } = movieRange;
   try {
-    const { data } = await supabase.from("movies").select("*").range(from, to);
-    return data;
+    const response = await supabase.from("movies").select("*", {count: "exact"}).range(from, to);
+    return response;
   } catch (error) {
     throw Error;
   }

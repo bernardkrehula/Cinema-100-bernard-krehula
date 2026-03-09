@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./index.css";
 import { reuqestMovieList } from "#/api/requestMovieList";
-import { requestMoviesArrayLength } from "#/api/requestMoviesArrayLength";
 import { useQuery } from "@tanstack/react-query";
 import MovieIcon from "./MovieIcon";
 import Btn from "#/components/ui/btn";
@@ -24,19 +23,15 @@ const MovieList = () => {
   });
 
   const handleMovieRequests = () => {
-    getMovieListNumber();
     if (selectedGenre) return reuqestMovieByGenre(selectedGenre, movieRange);
     return reuqestMovieList(movieRange);
   };
 
   const getMovieListNumber = async () => {
-    let movieColumnlength;
-    if(selectedGenre) movieColumnlength = moviePages?.length
-    else movieColumnlength = await requestMoviesArrayLength();
     const visibleMoviesNum = 12;
 
-    if (movieColumnlength) {
-      const movieNum = Math.ceil(movieColumnlength / visibleMoviesNum);
+    if (moviePages?.count) {
+      const movieNum = Math.ceil(moviePages.count / visibleMoviesNum);
       const list = [];
 
       for (let i = 1; i <= movieNum; i++) {
@@ -44,11 +39,20 @@ const MovieList = () => {
       }
       setMoviePageNumbers(list);
     }
-
   };
   useEffect(() => {
-    getMovieListNumber();
+    handleMovieRequests();
   }, []);
+  useEffect(() => {
+    if (moviePages?.count) getMovieListNumber();
+  }, [moviePages]);
+  useEffect(() => {
+    const resetPaginationNumbers = () => {
+      setCurrentMoviePage(1);
+      setMovieRange((prev) => ({ ...prev, from: 0, to: 11 }));
+    };
+    resetPaginationNumbers();
+  }, [selectedGenre]);
 
   const calculateMovieRange = (page: number) => {
     setCurrentMoviePage(page);
@@ -80,7 +84,7 @@ const MovieList = () => {
   };
   const rightArrowClick = () => {
     setMovieRange((prev) => {
-      if (prev.from >= 0 && prev.to < 100) {
+      if (prev.from >= 0 && prev.to < moviePages?.count) {
         return {
           from: prev.from + 12,
           to: prev.to + 12,
@@ -89,7 +93,7 @@ const MovieList = () => {
       return prev;
     });
     setCurrentMoviePage((prev) => {
-      if (prev < 9) return prev + 1;
+      if (prev < moviePageNumbers.length) return prev + 1;
       return prev;
     });
   };
@@ -98,11 +102,11 @@ const MovieList = () => {
     <div className="movie-list">
       <MovieToolbar setSelectedGenre={setSelectedGenre} />
       <ul className="movie-list-content">
-        {moviePages?.map((page, index) => {
+        {moviePages?.data?.map((page, index) => {
           return <MovieIcon key={index} {...page} />;
         })}
       </ul>
-      {moviePageNumbers.length > 1 && (
+      {
         <div className="list-numbers">
           <Btn type="button" variation="primary-large" onClick={leftArrowClick}>
             <MdKeyboardArrowLeft />
@@ -130,7 +134,7 @@ const MovieList = () => {
             <MdKeyboardArrowRight />
           </Btn>
         </div>
-      )}
+      }
     </div>
   );
 };

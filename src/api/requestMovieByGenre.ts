@@ -9,13 +9,12 @@ export const reuqestMovieByGenre = async (
 ) => {
   const { from, to } = movieRange;
   try {
-    const { data } = await supabase
+    const response = await supabase
       .from("movies")
-      .select()
+      .select("*", { count: "exact" })
       .or(`genre.cs.["${movieGenre}"]`)
       .range(from, to);
-      console.log(data)
-    return data;
+    return response;
   } catch (error) {
     throw Error;
   }
