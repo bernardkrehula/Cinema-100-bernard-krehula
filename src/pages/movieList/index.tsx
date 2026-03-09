@@ -25,7 +25,7 @@ const MovieList = () => {
 
   const handleMovieRequests = () => {
     getMovieListNumber();
-    if (selectedGenre) return reuqestMovieByGenre(selectedGenre);
+    if (selectedGenre) return reuqestMovieByGenre(selectedGenre, movieRange);
     return reuqestMovieList(movieRange);
   };
 
@@ -44,7 +44,6 @@ const MovieList = () => {
       }
       setMoviePageNumbers(list);
     }
-    console.log(moviePages?.length)
 
   };
   useEffect(() => {
