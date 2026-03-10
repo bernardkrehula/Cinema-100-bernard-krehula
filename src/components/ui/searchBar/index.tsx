@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import "./index.css";
 import Btn from "../btn";
 import { IoIosSearch } from "react-icons/io";

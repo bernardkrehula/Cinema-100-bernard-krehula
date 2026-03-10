@@ -9,7 +9,7 @@ import { requestGenreTypes } from "#/api/requestGenreTypes";
 
 type GenresType = { genre: string[] }[];
 
-const MovieToolbar = ({setSelectedGenre}: {setSelectedGenre: (value: string) => void}) => {
+const MovieToolbar = ({setSelectedGenre}: {setSelectedGenre: (value: string | null) => void}) => {
   const [genres, setGenres] = useState<string[]>([]);
   const [savedMovies, setSavedMovies] = useState<boolean>(false);
   const [selectHomepage, setSelectHomepage] = useState<boolean>(false);
@@ -41,7 +41,8 @@ const MovieToolbar = ({setSelectedGenre}: {setSelectedGenre: (value: string) => 
   };
   const handleMovieFilter = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const filterValue = e.target.value;
-    setSelectedGenre(filterValue);
+    if(filterValue != "All") return setSelectedGenre(filterValue);
+    return setSelectedGenre(null);
   };
 
   return (
@@ -53,6 +54,7 @@ const MovieToolbar = ({setSelectedGenre}: {setSelectedGenre: (value: string) => 
           className="movie-options"
           onChange={handleMovieFilter}
         >
+          <option>All</option>
           {genres.map((genre, index) => {
             return (
               <option key={index} value={genre}>

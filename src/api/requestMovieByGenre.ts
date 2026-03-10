@@ -14,6 +14,7 @@ export const reuqestMovieByGenre = async (
       .select("*", { count: "exact" })
       .or(`genre.cs.["${movieGenre}"]`)
       .range(from, to);
+
     return response;
   } catch (error) {
     throw Error;
