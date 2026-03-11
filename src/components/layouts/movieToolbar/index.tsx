@@ -6,10 +6,16 @@ import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 import { FaHouse } from "react-icons/fa6";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { requestGenreTypes } from "#/api/requestGenreTypes";
+import { requestMovieBySearch } from "#/api/requestMovieBySearch";
+import { debounce } from "throttle-debounce";
 
 type GenresType = { genre: string[] }[];
 
-const MovieToolbar = ({setSelectedGenre}: {setSelectedGenre: (value: string | null) => void}) => {
+const MovieToolbar = ({
+  setSelectedGenre,
+}: {
+  setSelectedGenre: (value: string | null) => void;
+}) => {
   const [genres, setGenres] = useState<string[]>([]);
   const [savedMovies, setSavedMovies] = useState<boolean>(false);
   const [selectHomepage, setSelectHomepage] = useState<boolean>(false);
@@ -41,13 +47,20 @@ const MovieToolbar = ({setSelectedGenre}: {setSelectedGenre: (value: string | nu
   };
   const handleMovieFilter = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const filterValue = e.target.value;
-    if(filterValue != "All") return setSelectedGenre(filterValue);
+    if (filterValue != "All") return setSelectedGenre(filterValue);
     return setSelectedGenre(null);
   };
+  const searchMovies = debounce(
+    1000,
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      requestMovieBySearch(value);
+    },
+  );
 
   return (
     <div className="movie-tool-bar">
-      <SearchBar placeholder="Search" value="" />
+      <SearchBar placeholder="Search" onChange={searchMovies} />
       <label className="movie-options-parent">
         <select
           id="movie-genre-filter"
