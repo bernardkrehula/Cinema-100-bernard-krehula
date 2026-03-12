@@ -8,6 +8,7 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import MovieToolbar from "#/components/layouts/movieToolbar";
 import { reuqestMovieByGenre } from "#/api/requestMovieByGenre";
+import { requestMovieBySearch } from "#/api/requestMovieBySearch";
 
 const MovieList = () => {
   const [moviePageNumbers, setMoviePageNumbers] = useState<number[]>([0]);
@@ -17,12 +18,14 @@ const MovieList = () => {
   });
   const [currentMoviePage, setCurrentMoviePage] = useState<number>(1);
   const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
+  const [searchInput, setSearchInput] = useState<string>('');
   const { data: moviePages } = useQuery({
-    queryKey: ["movie-pages", currentMoviePage, selectedGenre],
+    queryKey: ["movie-pages", currentMoviePage, selectedGenre, searchInput],
     queryFn: () => handleMovieRequests(),
   });
 
   const handleMovieRequests = () => {
+    if(searchInput) return requestMovieBySearch(searchInput);
     if (selectedGenre) return reuqestMovieByGenre(selectedGenre, movieRange);
     return reuqestMovieList(movieRange);
   };
@@ -100,7 +103,7 @@ const MovieList = () => {
 
   return (
     <div className="movie-list">
-      <MovieToolbar setSelectedGenre={setSelectedGenre} />
+      <MovieToolbar setSelectedGenre={setSelectedGenre} setSearchInput={setSearchInput}/>
       <ul className="movie-list-content">
         {moviePages?.data?.map((page, index) => {
           return <MovieIcon key={index} {...page} />;

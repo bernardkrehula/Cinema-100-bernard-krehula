@@ -6,15 +6,16 @@ import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 import { FaHouse } from "react-icons/fa6";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { requestGenreTypes } from "#/api/requestGenreTypes";
-import { requestMovieBySearch } from "#/api/requestMovieBySearch";
 import { debounce } from "throttle-debounce";
 
 type GenresType = { genre: string[] }[];
 
 const MovieToolbar = ({
   setSelectedGenre,
+  setSearchInput
 }: {
   setSelectedGenre: (value: string | null) => void;
+  setSearchInput: (value: string | null) => void;
 }) => {
   const [genres, setGenres] = useState<string[]>([]);
   const [savedMovies, setSavedMovies] = useState<boolean>(false);
@@ -53,8 +54,9 @@ const MovieToolbar = ({
   const searchMovies = debounce(
     1000,
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      requestMovieBySearch(value);
+      let value = e.target.value;
+      setSearchInput(value);
+      console.log(value)
     },
   );
 

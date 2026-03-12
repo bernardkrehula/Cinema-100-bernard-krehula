@@ -6,7 +6,6 @@ export const requestMovieBySearch = async (value: string) => {
       .from("movies")
       .select("*")
       .ilike('title', `%${value}%`)
-    console.log(value, response)
     return response;
   } catch (error) {
     throw Error;
