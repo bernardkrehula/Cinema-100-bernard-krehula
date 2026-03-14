@@ -15,7 +15,7 @@ const MovieToolbar = ({
   setSearchInput
 }: {
   setSelectedGenre: (value: string | null) => void;
-  setSearchInput: (value: string | null) => void;
+  setSearchInput: (value: string) => void;
 }) => {
   const [genres, setGenres] = useState<string[]>([]);
   const [savedMovies, setSavedMovies] = useState<boolean>(false);
