@@ -1,35 +1,31 @@
 import { useEffect, useState } from "react";
 import "./index.css";
-import { reuqestMovieList } from "#/api/requestMovieList";
 import { useQuery } from "@tanstack/react-query";
 import MovieIcon from "./MovieIcon";
 import Btn from "#/components/ui/btn";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import MovieToolbar from "#/components/layouts/movieToolbar";
-import { reuqestMovieByGenre } from "#/api/requestMovieByGenre";
-import { requestMovieBySearch } from "#/api/requestMovieBySearch";
+import { requestFilteredMovies } from "#/api/requestFilteredMovies";
 
 const MovieList = () => {
+  const [movieFilter, setMovieFilter] = useState({
+    filters: {
+      search: "",
+      genre: null,
+    },
+    range: {
+      from: 0,
+      to: 11,
+    },
+  });
   const [moviePageNumbers, setMoviePageNumbers] = useState<number[]>([0]);
-  const [movieRange, setMovieRange] = useState<{ from: number; to: number }>({
-    from: 0,
-    to: 11,
-  });
   const [currentMoviePage, setCurrentMoviePage] = useState<number>(1);
-  const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
-  const [searchInput, setSearchInput] = useState<string>('');
   const { data: moviePages } = useQuery({
-    queryKey: ["movie-pages", currentMoviePage, selectedGenre, searchInput],
-    queryFn: () => handleMovieRequests(),
+    queryKey: ["movie-pages", movieFilter],
+    queryFn: () => requestFilteredMovies(movieFilter),
   });
-
-  const handleMovieRequests = () => {
-    if(searchInput) return requestMovieBySearch(searchInput);
-    if (selectedGenre) return reuqestMovieByGenre(selectedGenre, movieRange);
-    return reuqestMovieList(movieRange);
-  };
-
+  
   const getMovieListNumber = async () => {
     const visibleMoviesNum = 12;
 
@@ -44,18 +40,18 @@ const MovieList = () => {
     }
   };
   useEffect(() => {
-    handleMovieRequests();
-  }, []);
-  useEffect(() => {
     if (moviePages?.count) getMovieListNumber();
   }, [moviePages]);
   useEffect(() => {
     const resetPaginationNumbers = () => {
       setCurrentMoviePage(1);
-      setMovieRange((prev) => ({ ...prev, from: 0, to: 11 }));
+      setMovieFilter((prev) => ({
+        ...prev,
+        range: { ...prev.range, from: 0, to: 11 },
+      }));
     };
     resetPaginationNumbers();
-  }, [selectedGenre]);
+  }, [movieFilter.filters.genre]);
 
   const calculateMovieRange = (page: number) => {
     setCurrentMoviePage(page);
@@ -68,14 +64,21 @@ const MovieList = () => {
       indexRange.from = 0;
       indexRange.to = 11;
     }
-    setMovieRange(indexRange);
+    setMovieFilter((prev) => ({
+      ...prev,
+      range: { ...prev.range, from: indexRange.from, to: indexRange.to },
+    }));
   };
   const leftArrowClick = () => {
-    setMovieRange((prev) => {
-      if (prev.from > 0) {
+    setMovieFilter((prev) => {
+      if (prev.range.from > 0) {
         return {
-          from: prev.from - 12,
-          to: prev.to - 12,
+          ...prev,
+          range: {
+            ...prev.range,
+            from: prev.range.from - 12,
+            to: prev.range.to - 12,
+          },
         };
       }
       return prev;
@@ -86,11 +89,15 @@ const MovieList = () => {
     });
   };
   const rightArrowClick = () => {
-    setMovieRange((prev) => {
-      if (prev.from >= 0 && prev.to < moviePages?.count) {
+    setMovieFilter((prev) => {
+      if (prev.range.from >= 0 && prev.range.to < moviePages?.count) {
         return {
-          from: prev.from + 12,
-          to: prev.to + 12,
+          ...prev,
+          range: {
+            ...prev.range,
+            from: prev.range.from + 12,
+            to: prev.range.to + 12,
+          },
         };
       }
       return prev;
@@ -99,11 +106,12 @@ const MovieList = () => {
       if (prev < moviePageNumbers.length) return prev + 1;
       return prev;
     });
+    console.log(moviePageNumbers.length)
   };
 
   return (
     <div className="movie-list">
-      <MovieToolbar setSelectedGenre={setSelectedGenre} setSearchInput={setSearchInput}/>
+      <MovieToolbar setMovieFilter={setMovieFilter} />
       <ul className="movie-list-content">
         {moviePages?.data?.map((page, index) => {
           return <MovieIcon key={index} {...page} />;
@@ -114,7 +122,7 @@ const MovieList = () => {
           <Btn type="button" variation="primary-large" onClick={leftArrowClick}>
             <MdKeyboardArrowLeft />
           </Btn>
-          {moviePageNumbers.map((page) => {
+          {moviePages?.count > 11 && moviePageNumbers.map((page) => {
             return (
               <Btn
                 type="button"

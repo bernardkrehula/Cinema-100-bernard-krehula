@@ -14,17 +14,14 @@ export const requestFilteredMovies = async ({
       .from("movies")
       .select("*", { count: "exact" })
       .range(range.from, range.to);
-
+    console.log(range, filters)
     if (filters.genre) {
-      query = query.contains("genre", [filters.genre]);
+      query = query.or(`genre.cs.["${filters.genre}"]`);
     }
     if (filters.search) {
       query = query.ilike("title", `%${filters.search}%`);
     }
-
-    const { data } = await query;
-
-    return data;
+    return query;
   } catch (error) {
     throw Error;
   }

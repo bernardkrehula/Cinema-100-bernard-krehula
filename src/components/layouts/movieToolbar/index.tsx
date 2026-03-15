@@ -9,13 +9,21 @@ import { requestGenreTypes } from "#/api/requestGenreTypes";
 import { debounce } from "throttle-debounce";
 
 type GenresType = { genre: string[] }[];
+type MovieFilterState = {
+  filters: {
+    search: string;
+    genre: string | null;
+  };
+  range: {
+    from: number;
+    to: number;
+  };
+};
 
 const MovieToolbar = ({
-  setSelectedGenre,
-  setSearchInput
+  setMovieFilter,
 }: {
-  setSelectedGenre: (value: string | null) => void;
-  setSearchInput: (value: string) => void;
+  setMovieFilter: React.Dispatch<React.SetStateAction<MovieFilterState>>;
 }) => {
   const [genres, setGenres] = useState<string[]>([]);
   const [savedMovies, setSavedMovies] = useState<boolean>(false);
@@ -48,15 +56,25 @@ const MovieToolbar = ({
   };
   const handleMovieFilter = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const filterValue = e.target.value;
-    if (filterValue != "All") return setSelectedGenre(filterValue);
-    return setSelectedGenre(null);
+    if (filterValue != "All")
+      return setMovieFilter((prev) => ({
+        ...prev,
+        filters: { ...prev.filters, genre: filterValue }
+      }));
+    return setMovieFilter((prev) => ({
+      ...prev,
+      filters: { ...prev.filters, genre: null },
+    }));
   };
   const searchMovies = debounce(
     1000,
     (e: React.ChangeEvent<HTMLInputElement>) => {
       let value = e.target.value;
-      setSearchInput(value);
-      console.log(value)
+      setMovieFilter((prev) => ({
+        ...prev,
+        filters: { ...prev.filters, search: value },
+        range: { ...prev.range, from: 0, to: 100}
+      }));
     },
   );
 
