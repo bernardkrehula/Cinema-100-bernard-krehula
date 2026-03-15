@@ -12,7 +12,7 @@ const MovieList = () => {
   const [movieFilter, setMovieFilter] = useState({
     filters: {
       search: "",
-      genre: null,
+      genre: null as string | null,
     },
     range: {
       from: 0,
@@ -25,7 +25,7 @@ const MovieList = () => {
     queryKey: ["movie-pages", movieFilter],
     queryFn: () => requestFilteredMovies(movieFilter),
   });
-  
+
   const getMovieListNumber = async () => {
     const visibleMoviesNum = 12;
 
@@ -106,7 +106,7 @@ const MovieList = () => {
       if (prev < moviePageNumbers.length) return prev + 1;
       return prev;
     });
-    console.log(moviePageNumbers.length)
+    console.log(moviePageNumbers.length);
   };
 
   return (
@@ -122,20 +122,20 @@ const MovieList = () => {
           <Btn type="button" variation="primary-large" onClick={leftArrowClick}>
             <MdKeyboardArrowLeft />
           </Btn>
-          {moviePages?.count > 11 && moviePageNumbers.map((page) => {
-            return (
-              <Btn
-                type="button"
-                variation={`primary-large ${currentMoviePage === page ? "active-page" : ""}`}
-                key={page}
-                onClick={() => {
-                  calculateMovieRange(page);
-                  setCurrentMoviePage(page);
-                }}
-              >
-                {page}
-              </Btn>
-            );
+          {moviePageNumbers.length > 1 && moviePageNumbers.map((page) => {
+              return (
+                <Btn
+                  type="button"
+                  variation={`primary-large ${currentMoviePage === page ? "active-page" : ""}`}
+                  key={page}
+                  onClick={() => {
+                    calculateMovieRange(page);
+                    setCurrentMoviePage(page);
+                  }}
+                >
+                  {page}
+                </Btn>
+              );
           })}
           <Btn
             type="button"

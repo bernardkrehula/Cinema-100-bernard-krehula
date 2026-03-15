@@ -54,12 +54,12 @@ const MovieToolbar = ({
     setSelectHomepage(true);
     setSavedMovies(false);
   };
-  const handleMovieFilter = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMovieFilter = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const filterValue = e.target.value;
     if (filterValue != "All")
       return setMovieFilter((prev) => ({
         ...prev,
-        filters: { ...prev.filters, genre: filterValue }
+        filters: { ...prev.filters, genre: filterValue },
       }));
     return setMovieFilter((prev) => ({
       ...prev,
@@ -73,7 +73,7 @@ const MovieToolbar = ({
       setMovieFilter((prev) => ({
         ...prev,
         filters: { ...prev.filters, search: value },
-        range: { ...prev.range, from: 0, to: 100}
+        range: { ...prev.range, from: 0, to: 100 },
       }));
     },
   );
