@@ -42,6 +42,7 @@ const MovieList = () => {
   useEffect(() => {
     if (moviePages?.count) getMovieListNumber();
   }, [moviePages]);
+
   useEffect(() => {
     const resetPaginationNumbers = () => {
       setCurrentMoviePage(1);
@@ -90,7 +91,11 @@ const MovieList = () => {
   };
   const rightArrowClick = () => {
     setMovieFilter((prev) => {
-      if (prev.range.from >= 0 && prev.range.to < moviePages?.count) {
+      if (
+        moviePages?.count &&
+        prev.range.from >= 0 &&
+        prev.range.to < moviePages.count
+      ) {
         return {
           ...prev,
           range: {
@@ -106,7 +111,6 @@ const MovieList = () => {
       if (prev < moviePageNumbers.length) return prev + 1;
       return prev;
     });
-    console.log(moviePageNumbers.length);
   };
 
   return (
@@ -117,25 +121,25 @@ const MovieList = () => {
           return <MovieIcon key={index} {...page} />;
         })}
       </ul>
-      {
+      {moviePageNumbers.length > 1 && (
         <div className="list-numbers">
           <Btn type="button" variation="primary-large" onClick={leftArrowClick}>
             <MdKeyboardArrowLeft />
           </Btn>
-          {moviePageNumbers.length > 1 && moviePageNumbers.map((page) => {
-              return (
-                <Btn
-                  type="button"
-                  variation={`primary-large ${currentMoviePage === page ? "active-page" : ""}`}
-                  key={page}
-                  onClick={() => {
-                    calculateMovieRange(page);
-                    setCurrentMoviePage(page);
-                  }}
-                >
-                  {page}
-                </Btn>
-              );
+          {moviePageNumbers.map((page) => {
+            return (
+              <Btn
+                type="button"
+                variation={`primary-large ${currentMoviePage === page ? "active-page" : ""}`}
+                key={page}
+                onClick={() => {
+                  calculateMovieRange(page);
+                  setCurrentMoviePage(page);
+                }}
+              >
+                {page}
+              </Btn>
+            );
           })}
           <Btn
             type="button"
@@ -145,7 +149,7 @@ const MovieList = () => {
             <MdKeyboardArrowRight />
           </Btn>
         </div>
-      }
+      )}
     </div>
   );
 };

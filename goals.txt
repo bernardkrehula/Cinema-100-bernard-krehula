@@ -27,3 +27,15 @@ Odraiti da se filmovi na brojeve i strelice pozivaju po 10 filmova
 
 5.3
 Otkriti kako filtrirati po zanru filmove request koji treba poslati kako postaviti
+
+
+15.3 Odraditi login i logout
+Napraviti jedan acc i jedan demo
+Napraviti onako da se na load prikazu ikone sive kao na youtube bez contenta
+
+16.3
+-Odraditi dizajn logina
+17.3 
+-Odraditi acc i demo acc login
+18.3
+-Odraditi ikone sive kod loadinga kao na yt

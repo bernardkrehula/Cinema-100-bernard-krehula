@@ -8,17 +8,8 @@
   color: rgb(255, 255, 255);
   font-weight: 400;
 }
-.logo-content {
-  display: flex;
-  align-items: center;
-  font-size: 1.7rem;
-  gap: 8px;
+.navbar img{
   margin-left: 80px;
-  cursor: pointer;
-}
-.logo {
-  width: 40px;
-  height: 40px;
 }
 .logout-option {
   display: flex;

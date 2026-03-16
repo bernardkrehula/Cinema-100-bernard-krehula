@@ -6,6 +6,10 @@ import SingleMovie from "./pages/singleMovie";
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <Login />
+  },
+  {
+    path: "homepage",
     element: <Homepage />,
   },
   {
