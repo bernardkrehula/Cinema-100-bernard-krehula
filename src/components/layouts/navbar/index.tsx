@@ -11,7 +11,7 @@ const NavBar = () => {
 
   return (
     <nav className="navbar">
-      <Logo onClick={navigateToHomepage}/>
+      <Logo onClick={navigateToHomepage} variation="small"/>
       <span className="welcome-message">Welcome back, Guest</span>
       <div className="logout-option">
         <span>Log out</span>
