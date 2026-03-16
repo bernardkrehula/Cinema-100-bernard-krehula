@@ -17,3 +17,24 @@
     background-color: var(--nav--bg);
     color: white;
 }
+.secondary{
+    color: white;
+    background-color: rgb(205, 46, 46);
+    width: 100%;
+    border-radius: 5px;
+    padding: 5px;
+    transition: 0.2s all;
+}
+.secondary:hover{
+    background-color: rgb(228, 43, 43);
+}
+.lg{
+    font-size: 1.7rem;
+}
+.danger{
+    color: rgb(233, 52, 52);
+}
+.md{
+    font-size: 1.5rem;
+    font-weight: 600;
+}

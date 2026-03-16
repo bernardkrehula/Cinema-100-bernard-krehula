@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 
 type BtnType = {
   variation?: string;
+  size?: string;
   type: "button" | "submit" | "reset";
   onClick?: () => void;
   children: string | ReactNode;
@@ -10,12 +11,13 @@ type BtnType = {
 
 const Btn = ({
   variation,
+  size,
   type = "button",
   onClick = () => {},
   children
 }: BtnType) => {
   return (
-    <button className={`btn ${variation}`} type={type} onClick={onClick}>
+    <button className={`btn ${variation} ${size}`} type={type} onClick={onClick}>
       {children}
     </button>
   );

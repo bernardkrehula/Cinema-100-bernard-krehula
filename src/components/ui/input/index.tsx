@@ -5,19 +5,19 @@ type InputType = {
   value?: string;
   placeholder?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  className?: string;
+  variaton?: string;
 };
 //Dodati variation umjesto className
 const Input = ({
   type = "text",
   value = "",
-  placeholder = "Enter task",
+  placeholder = "",
   onChange = () => {},
-  className = "",
+  variaton = "",
 }: InputType) => {
   return (
     <input
-      className={className}
+      className={variaton}
       type={type}
       value={value}
       placeholder={placeholder}
