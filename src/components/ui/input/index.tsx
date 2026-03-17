@@ -6,6 +6,7 @@ type InputType = {
   placeholder?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   variaton?: string;
+  name: string;
 };
 //Dodati variation umjesto className
 const Input = ({
@@ -14,9 +15,11 @@ const Input = ({
   placeholder = "",
   onChange = () => {},
   variaton = "",
+  name,
 }: InputType) => {
   return (
     <input
+      name={name}
       className={variaton}
       type={type}
       value={value}
