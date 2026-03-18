@@ -23,17 +23,17 @@ const SignInForm = () => {
   return (
     <div className="sing-in-content">
       <form className="sing-in-window">
-        <h1 className="sing-in-title">Log in</h1>
+        <h1 className="sing-in-title">Sign in</h1>
         <Input
           name="email"
           onChange={handleInputs}
-          placeholder="Email"
+          placeholder="Enter new email"
           value={inputValue.email}
         />
         <Input
           name="password"
           onChange={handleInputs}
-          placeholder="Password"
+          placeholder="Enter new password"
           value={inputValue.password}
         />
         <Btn
@@ -42,13 +42,13 @@ const SignInForm = () => {
           size="lg"
           onClick={handleLogin}
         >
-          Log in
+          Sign in
         </Btn>
         <div className="sing-in-questions">
           <div className="sing-in-question-section">
-            <span>Don't have account ?</span>
+            <span>Already have account ?</span>
             <Btn type="button" variation="danger" size="md">
-              Sign up
+              Log in
             </Btn>
           </div>
           <div className="sing-in-question-section">
