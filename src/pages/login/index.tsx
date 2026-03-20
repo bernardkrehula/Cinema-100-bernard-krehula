@@ -2,15 +2,15 @@ import Logo from "#/components/ui/logo";
 import { useState } from "react";
 import "./index.css";
 import LoginForm from "#/components/auth/LoginForm";
-import SignInForm from "#/components/auth/SignInForm";
+import SignInForm from "#/components/auth/SignUpForm";
 
 const Login = () => {
-  const [activeAcc, setActiveAcc] = useState<boolean>(false);
+  const [hasAccount, setHasAccount] = useState<boolean>(true);
 
   return (
     <div className="login">
       <Logo variation="large" />
-      {activeAcc ? <LoginForm setActiveAcc={setActiveAcc}/> : <SignInForm setActiveAcc={setActiveAcc}/>}
+      {hasAccount ? <LoginForm setHasAccount={setHasAccount}/> : <SignInForm setHasAccount={setHasAccount}/>}
     </div>
   );
 };

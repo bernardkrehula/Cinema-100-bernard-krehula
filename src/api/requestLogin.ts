@@ -1,20 +1,19 @@
 import supabase from "#/config/supabaseClientVite";
 
-type SingInType = {
+type LoginType = {
     email: string;
     password: string;
 }
 
-export const requestSignIn = async(inputValue: SingInType) => {
+export const requestLogIn = async(inputValue: LoginType) => {
     const { email, password } = inputValue;
 
     try{
-        const response = await supabase.auth.signUp({
+        const response = await supabase.auth.signInWithPassword({
             email: email,
             password: password
         })
-        const newSession = supabase.auth.getSession().then();
-        console.log(response, newSession)
+        console.log(response)
         return response;
     }
     catch(error){

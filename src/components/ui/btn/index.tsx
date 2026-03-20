@@ -7,6 +7,7 @@ type BtnType = {
   type: "button" | "submit" | "reset";
   onClick?: () => void;
   children: string | ReactNode;
+  disabled?: boolean;
 };
 
 const Btn = ({
@@ -14,10 +15,11 @@ const Btn = ({
   size,
   type = "button",
   onClick = () => {},
-  children
+  children,
+  disabled
 }: BtnType) => {
   return (
-    <button className={`btn ${variation} ${size}`} type={type} onClick={onClick}>
+    <button onClick={onClick} className={`btn ${variation} ${size}`} type={type} disabled={disabled} >
       {children}
     </button>
   );

@@ -38,3 +38,6 @@
     font-size: 1.5rem;
     font-weight: 600;
 }
+.disabled{
+    background-color: gray;
+}

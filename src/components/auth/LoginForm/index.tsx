@@ -1,10 +1,14 @@
 import "./index.css";
 import Input from "#/components/ui/input";
 import Btn from "#/components/ui/btn";
-import { requestSignIn } from "#/api/requestSingIn";
 import { useState } from "react";
+import { requestLogIn } from "#/api/requestLogin";
 
-const LoginForm = () => {
+type LoginFormType = {
+  setHasAccount: (value: boolean) => void;
+}
+
+const LoginForm = ({setHasAccount}: LoginFormType) => {
   const [inputValue, setInputValue] = useState<{
     email: string;
     password: string;
@@ -19,7 +23,11 @@ const LoginForm = () => {
     setInputValue({ ...inputValue, [name]: value });
   };
 
-  const handleLogin = () => requestSignIn(inputValue);
+  const handleHasAccount = () => setHasAccount(false);
+
+  const handleLogin = () => {
+    requestLogIn(inputValue);
+  }
   return (
     <div className="login-content">
       <form className="login-window">
@@ -47,7 +55,7 @@ const LoginForm = () => {
         <div className="login-questions">
           <div className="login-question-section">
             <span>Don't have account ?</span>
-            <Btn type="button" variation="danger" size="md">
+            <Btn type="button" onClick={handleHasAccount} variation="danger" size="md">
               Sign up
             </Btn>
           </div>
