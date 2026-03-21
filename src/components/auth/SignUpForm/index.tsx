@@ -2,7 +2,7 @@ import "./index.css";
 import Input from "#/components/ui/input";
 import Btn from "#/components/ui/btn";
 import { useState } from "react";
-import { requestSignIn } from "#/api/requestSingIn";
+import { requestSignUp } from "#/api/requestSingUp";
 
 type SignInFormType = {
   setHasAccount: (value: boolean) => void;
@@ -30,7 +30,7 @@ const SignUpForm = ({ setHasAccount }: SignInFormType) => {
   const handleSignIn = async () => {
     if (inputValue.email && inputValue.password != "") {
       setDisableBtn(true);
-      const request = await requestSignIn(inputValue);
+      const request = await requestSignUp(inputValue);
       setInputValue((prev) => ({ ...prev, email: "", password: "" }));
       if (request) {
         setDisableBtn(false);
@@ -39,7 +39,7 @@ const SignUpForm = ({ setHasAccount }: SignInFormType) => {
     }
     setTimeout(() => {
       setErrorMessages("");
-    },3000)
+    },5000)
   };
 
   return (

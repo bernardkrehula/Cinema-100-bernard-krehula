@@ -5,7 +5,7 @@ type SingInType = {
     password: string;
 }
 
-export const requestSignIn = async(inputValue: SingInType) => {
+export const requestSignUp = async(inputValue: SingInType) => {
     const { email, password } = inputValue;
 
     try{
@@ -13,8 +13,8 @@ export const requestSignIn = async(inputValue: SingInType) => {
             email: email,
             password: password
         })
-        const newSession = supabase.auth.getSession().then();
-        console.log(response, newSession)
+        const newSession = await supabase.auth.getUser()
+        console.log("response: ", response, "session: ", newSession)
         return response;
     }
     catch(error){
