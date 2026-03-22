@@ -1,7 +1,7 @@
 import "./index.css";
 import Input from "#/components/ui/input";
 import Btn from "#/components/ui/btn";
-import { useState } from "react";
+import React, { useState } from "react";
 import { requestSignUp } from "#/api/requestSingUp";
 import { useNavigate } from "react-router";
 
@@ -39,7 +39,8 @@ const SignUpForm = ({ setHasAccount }: SignInFormType) => {
     }, 5000);
   };
 
-  const handleSignIn = async () => {
+  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (inputValue.email && inputValue.password === "") return null;
 
     setDisableBtn(true);
@@ -57,7 +58,7 @@ const SignUpForm = ({ setHasAccount }: SignInFormType) => {
 
   return (
     <div className="sing-up-content">
-      <form className="sing-up-window">
+      <form className="sing-up-window" onSubmit={handleSignIn}>
         <h1 className="sing-up-title">Sign in</h1>
         <Input
           name="email"
@@ -74,10 +75,9 @@ const SignUpForm = ({ setHasAccount }: SignInFormType) => {
         />
         <h2 className="sign-up-error-message">{errorMessages}</h2>
         <Btn
-          type="button"
+          type="submit"
           variation={`secondary ${disbaleBtn ? "disabled" : "none"}`}
           size="lg"
-          onClick={handleSignIn}
           disabled={disbaleBtn}
         >
           Sign in

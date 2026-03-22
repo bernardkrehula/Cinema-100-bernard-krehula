@@ -9,12 +9,13 @@ export const requestLogIn = async(inputValue: LoginType) => {
     const { email, password } = inputValue;
 
     try{
-        const response = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabase.auth.signInWithPassword({
             email: email,
             password: password
         })
-        console.log(response)
-        return response;
+        
+        if(error) return {succes: false, error};
+        return {sucess: true, data};
     }
     catch(error){
         throw Error

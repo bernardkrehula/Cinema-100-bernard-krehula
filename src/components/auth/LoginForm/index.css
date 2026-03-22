@@ -31,3 +31,9 @@
     display: flex;
     gap: 7px;
 }
+.login-error-message{
+  margin-top: -5px;
+  margin-bottom: 10px;
+  color: rgb(255, 255, 255, 0.9);
+  font-weight: 500;
+}
