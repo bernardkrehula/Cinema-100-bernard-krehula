@@ -3,6 +3,7 @@ import Input from "#/components/ui/input";
 import Btn from "#/components/ui/btn";
 import { useState } from "react";
 import { requestSignUp } from "#/api/requestSingUp";
+import { useNavigate } from "react-router";
 
 type SignInFormType = {
   setHasAccount: (value: boolean) => void;
@@ -17,7 +18,8 @@ const SignUpForm = ({ setHasAccount }: SignInFormType) => {
     password: "",
   });
   const [disbaleBtn, setDisableBtn] = useState<boolean>(false);
-  const [errorMessages, setErrorMessages] = useState<string>("");
+  const [errorMessages, setErrorMessages] = useState<string | undefined>("");
+  const navigate = useNavigate();
 
   const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -27,19 +29,30 @@ const SignUpForm = ({ setHasAccount }: SignInFormType) => {
 
   const handleHasAccount = () => setHasAccount(true);
 
-  const handleSignIn = async () => {
-    if (inputValue.email && inputValue.password != "") {
-      setDisableBtn(true);
-      const request = await requestSignUp(inputValue);
-      setInputValue((prev) => ({ ...prev, email: "", password: "" }));
-      if (request) {
-        setDisableBtn(false);
-      }
-      if(request.error) setErrorMessages(request.error.message);
-    }
+  const resetInputValue = () =>
+    setInputValue((prev) => ({ ...prev, email: "", password: "" }));
+
+  const disableSingUpBtn = () => {
     setTimeout(() => {
       setErrorMessages("");
-    },5000)
+      setDisableBtn(false);
+    }, 5000);
+  };
+
+  const handleSignIn = async () => {
+    if (inputValue.email && inputValue.password === "") return null;
+
+    setDisableBtn(true);
+    const result = await requestSignUp(inputValue);
+    resetInputValue();
+    if (result.succes) {
+      setDisableBtn(false);
+      return navigate("/homepage");
+    }
+    if (!result.succes) {
+      disableSingUpBtn();
+      setErrorMessages(result.error?.message);
+    }
   };
 
   return (
