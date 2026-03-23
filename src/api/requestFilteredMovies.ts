@@ -14,7 +14,6 @@ export const requestFilteredMovies = async ({
       .from("movies")
       .select("*", { count: "exact" })
       .range(range.from, range.to);
-    console.log(range, filters)
     if (filters.genre) {
       query = query.or(`genre.cs.["${filters.genre}"]`);
     }

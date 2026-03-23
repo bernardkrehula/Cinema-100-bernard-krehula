@@ -3,11 +3,17 @@ import { useNavigate } from "react-router";
 import "./index.css";
 import { FaPowerOff } from "react-icons/fa6";
 import Logo from "#/components/ui/logo";
+import { requestSingOut } from "#/api/requestSignOut";
 
 const NavBar = () => {
   const navigate = useNavigate();
 
-  const navigateToHomepage = () => navigate('/');
+  const handleSingOut = async() => {
+    const result = await requestSingOut();
+    if(result.succes) return navigate("/");
+  }
+
+  const navigateToHomepage = () => navigate('/homepage');
 
   return (
     <nav className="navbar">
@@ -15,7 +21,7 @@ const NavBar = () => {
       <span className="welcome-message">Welcome back, Guest</span>
       <div className="logout-option">
         <span>Log out</span>
-        <Btn type="button">
+        <Btn type="button" onClick={handleSingOut}>
           <FaPowerOff />
         </Btn>
       </div>

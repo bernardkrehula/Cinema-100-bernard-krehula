@@ -1,18 +1,21 @@
 import supabase from "#/config/supabaseClientVite";
 import { createContext, useContext, useEffect, useState } from "react";
 
-const AuthContext = createContext("");
+const AuthContext = createContext({});
 
 export const AuthContextProvider = ({ children }) => {
   const [session, setSession] = useState(undefined);
 
-
-
   useEffect(() => {
-    supabase.auth.getSession().then(({data: {session} }) => {
-        setSession(session);
-    }) 
-  })
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('auth-session', session)
+      setSession(session);
+    });
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+    });
+  }, []);
 
   return (
     <AuthContext.Provider value={{ session }}>{children}</AuthContext.Provider>

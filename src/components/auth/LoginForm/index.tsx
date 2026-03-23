@@ -39,24 +39,22 @@ const LoginForm = ({ setHasAccount }: LoginFormType) => {
     }, 5000);
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (inputValue.email && inputValue.password === "") return null;
-
     setDisableBtn(true);
     const result = await requestLogIn(inputValue);
     resetInputValue();
-    if (result.succes) {
-      setDisableBtn(false);
-      return navigate("/homepage");
-    }
-    if (!result.succes) {
+    console.log(result);
+    if (result.sucess) return navigate("/homepage");
+    else {
       disableSingUpBtn();
       setErrorMessages(result.error?.message);
     }
   };
   return (
     <div className="login-content">
-      <form className="login-window">
+      <form className="login-window" onSubmit={handleLogin}>
         <h1 className="login-title">Log in</h1>
         <Input
           name="email"
@@ -73,10 +71,9 @@ const LoginForm = ({ setHasAccount }: LoginFormType) => {
         />
         <h2 className="login-error-message">{errorMessages}</h2>
         <Btn
-          type="button"
+          type="submit"
           variation={`secondary ${disbaleBtn ? "disabled" : "none"}`}
           size="lg"
-          onClick={handleLogin}
           disabled={disbaleBtn}
         >
           Log in
