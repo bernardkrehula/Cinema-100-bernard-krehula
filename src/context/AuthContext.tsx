@@ -1,14 +1,21 @@
 import supabase from "#/config/supabaseClientVite";
+import type { Session } from "@supabase/supabase-js";
+import type { ReactNode } from "react";
 import { createContext, useContext, useEffect, useState } from "react";
 
-const AuthContext = createContext({});
+type AuthContextType = {
+  session: Session | null | undefined;
+};
 
-export const AuthContextProvider = ({ children }) => {
-  const [session, setSession] = useState(undefined);
+const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+
+export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
+  const [session, setSession] = useState<Session | null>(null);
+
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log('auth-session', session)
+      console.log("auth-session", session);
       setSession(session);
     });
 

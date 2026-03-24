@@ -7,9 +7,10 @@ import { useNavigate } from "react-router";
 
 type SignInFormType = {
   setHasAccount: (value: boolean) => void;
+  handleDemoLogin: () => void;
 };
 
-const SignUpForm = ({ setHasAccount }: SignInFormType) => {
+const SignUpForm = ({ setHasAccount, handleDemoLogin }: SignInFormType) => {
   const [inputValue, setInputValue] = useState<{
     email: string;
     password: string;
@@ -46,11 +47,9 @@ const SignUpForm = ({ setHasAccount }: SignInFormType) => {
     setDisableBtn(true);
     const result = await requestSignUp(inputValue);
     resetInputValue();
-    if (result.succes) {
-      setDisableBtn(false);
-      return navigate("/homepage");
-    }
-    if (!result.succes) {
+    console.log(result)
+    if (result.success) return navigate("/homepage");
+    else {
       disableSingUpBtn();
       setErrorMessages(result.error?.message);
     }
@@ -96,7 +95,7 @@ const SignUpForm = ({ setHasAccount }: SignInFormType) => {
           </div>
           <div className="sing-up-question-section">
             <span>Or,</span>
-            <Btn type="button" variation="danger" size="md">
+            <Btn type="button" onClick={handleDemoLogin} variation="danger" size="md">
               Log in as a guest
             </Btn>
           </div>

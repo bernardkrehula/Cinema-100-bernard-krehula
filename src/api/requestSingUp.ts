@@ -13,9 +13,8 @@ export const requestSignUp = async (inputValue: SingInType) => {
       email: email,
       password: password,
     });
-    console.log(error)
-    if (error) return { succes: false, error };
-    return { succes: true, data };
+    if (error) return { success: false, error };
+    return { success: true, data };
   } catch (error) {
     throw Error;
   }

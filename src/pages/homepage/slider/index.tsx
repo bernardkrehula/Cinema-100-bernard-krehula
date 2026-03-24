@@ -18,6 +18,8 @@ const Slider = () => {
   
   
   const slideOnClick = (side: string) => {
+    if (!trendingMovies || trendingMovies.length === 0) return;
+    
     const visibleMovies = 4;
     const totalPages = trendingMovies.length / visibleMovies;
     setAllPages(totalPages);
@@ -53,7 +55,6 @@ const Slider = () => {
       });
     }
   };
-  console.log(isLoading)
 
   return (
     <div className="slider">

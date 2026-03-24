@@ -11,10 +11,10 @@ const Homepage = () => {
   const {session} = UserAuth();
 
   useEffect(() => {
-    if(!session) navigate("/")
-    else navigate("/homepage")
-  }, [session])
-     
+    if (!session) navigate("/");
+    else navigate("/homepage");
+  }, [session]);
+
   return (
     <div className="homepage">
       <NavBar />

@@ -14,8 +14,8 @@ export const requestLogIn = async(inputValue: LoginType) => {
             password: password
         })
         
-        if(error) return {succes: false, error};
-        return {sucess: true, data};
+        if(error) return {success: false, error};
+        return {success: true, data};
     }
     catch(error){
         throw Error
