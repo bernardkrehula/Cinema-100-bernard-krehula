@@ -4,20 +4,31 @@ import "./index.css";
 import { FaPowerOff } from "react-icons/fa6";
 import Logo from "#/components/ui/logo";
 import { requestSingOut } from "#/api/requestSignOut";
+import { useEffect, useState } from "react";
 
 const NavBar = () => {
+  const [isLoading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
-  const handleSingOut = async() => {
+  const handleSingOut = async () => {
     const result = await requestSingOut();
-    if(result.succes) return navigate("/");
-  }
+    if (result.success) return navigate("/");
+  };
+  const navigateToHomepage = () => navigate("/homepage");
 
-  const navigateToHomepage = () => navigate('/homepage');
+  useEffect(() => {
+    const setLoadingLine = () => {
+      setTimeout(() => {
+        setLoading(false)
+      }, 2000);
+    };
+    setLoadingLine();
+  }, []);
 
   return (
     <nav className="navbar">
-      <Logo onClick={navigateToHomepage} variation="small"/>
+      <div className="loading-line" style={{ width: !isLoading ? "0" : "100%" }} />
+      <Logo onClick={navigateToHomepage} variation="small" />
       <span className="welcome-message">Welcome back, Guest</span>
       <div className="logout-option">
         <span>Log out</span>

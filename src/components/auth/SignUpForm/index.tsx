@@ -47,7 +47,6 @@ const SignUpForm = ({ setHasAccount, handleDemoLogin }: SignInFormType) => {
     setDisableBtn(true);
     const result = await requestSignUp(inputValue);
     resetInputValue();
-    console.log(result)
     if (result.success) return navigate("/homepage");
     else {
       disableSingUpBtn();
