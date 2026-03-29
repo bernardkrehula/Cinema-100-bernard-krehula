@@ -15,7 +15,6 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      console.log("auth-session", session);
       setSession(session);
     });
 

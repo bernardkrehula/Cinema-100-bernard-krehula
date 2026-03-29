@@ -17,7 +17,10 @@ export const requestLogIn = async(inputValue: LoginType) => {
         if(error) return {success: false, error};
         return {success: true, data};
     }
-    catch(error){
-        throw Error
+    catch(error: unknown){
+        //Odraditi customClassu generic error 
+        const genericError = error
+        error.isCustom = true
+        throw genericError
     }
 }
