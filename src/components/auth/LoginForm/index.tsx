@@ -5,6 +5,8 @@ import React, { useState } from "react";
 import { requestLogIn } from "#/api/requestLogin";
 import { useNavigate } from "react-router";
 import * as v from "valibot";
+import { ValidationError } from "#/helpers/ValidationError";
+import { GenericError } from "#/helpers/GenericError";
 
 type LoginFormType = {
   setHasAccount: (value: boolean) => void;
@@ -41,8 +43,8 @@ const LoginForm = ({ setHasAccount, handleDemoLogin }: LoginFormType) => {
     }, 5000);
   };
   //Dodati valibot
-  const LocalErrorValidator = (e: React.ChangeEvent<FormData>) => {
-    e.preventDefault();
+
+  const LocalErrorValidator = () => {
     const LoginScheme = v.object({
       email: v.pipe(
         v.string("Your email must be a string."),
@@ -59,18 +61,29 @@ const LoginForm = ({ setHasAccount, handleDemoLogin }: LoginFormType) => {
     return response;
   };
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setDisableBtn(true);
-    const result = await requestLogIn(inputValue);
-    resetInputValue();
-    if (result.success) return navigate("/homepage");
-    else {
+    try {
+      LocalErrorValidator();
+      const result = await requestLogIn(inputValue);
+      resetInputValue();
+      if (result.success) return navigate("/homepage");
+    } catch (error: unknown) {
+      if (error instanceof v.ValiError) {
+        console.log(error.message);
+        setErrorMessages(error.message);
+      } else if (error instanceof GenericError) {
+        console.error("GenericError caught:", error.message);
+        setErrorMessages("Something went wrong, please try again.");
+      } else {
+        console.error("Unknown error:", error);
+      }
       disableSingUpBtn();
-      setErrorMessages(result.error?.message);
     }
   };
   return (
     <div className="login-content">
-      <form className="login-window" onSubmit={LocalErrorValidator}>
+      <form className="login-window" onSubmit={handleLogin}>
         <h1 className="login-title">Log in</h1>
         <Input
           name="email"
