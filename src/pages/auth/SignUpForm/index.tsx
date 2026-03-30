@@ -28,7 +28,7 @@ const SignUpForm = ({ setHasAccount, handleDemoLogin }: SignInFormType) => {
     setInputValue({ ...inputValue, [name]: value });
   };
 
-  const handleHasAccount = () => setHasAccount(true);
+  const handleLoginReddirection = () => navigate('/');
 
   const resetInputValue = () =>
     setInputValue((prev) => ({ ...prev, email: "", password: "" }));
@@ -85,7 +85,7 @@ const SignUpForm = ({ setHasAccount, handleDemoLogin }: SignInFormType) => {
             <span>Already have account ?</span>
             <Btn
               type="button"
-              onClick={handleHasAccount}
+              onClick={handleLoginReddirection}
               variation="danger"
               size="md"
             >

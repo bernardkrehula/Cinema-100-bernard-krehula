@@ -1,35 +1,38 @@
 import { createBrowserRouter } from "react-router-dom";
 import Homepage from "./pages/homepage";
-import Login from "./pages/login";
 import SingleMovie from "./pages/singleMovie";
-import LoginForm from "./components/auth/LoginForm";
-import SignUpForm from "./components/auth/SignUpForm";
+import LoginForm from "./pages/auth/LoginForm";
+import SignUpForm from "./pages/auth/SignUpForm";
+import { AuthContextProvider } from "./context/AuthContext";
+import { Outlet } from "react-router";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Login />
+    element: (
+      <AuthContextProvider>
+        <Outlet />
+      </AuthContextProvider>
+    ),
+    children: [
+      {
+        path: "/",
+        element: <LoginForm />,
+      },
+      {
+        path: "/sign-up",
+        element: <SignUpForm />,
+      },
+      {
+        path: "homepage",
+        element: <Homepage />,
+      },
+      {
+        path: "movie/:movieID",
+        element: <SingleMovie />,
+      },
+    ],
   },
-  {
-    path: "homepage",
-    element: <Homepage />,
-  },
-  {
-    path: "login",
-    element: <Login />,
-  },
-  {
-    path: "movie/:movieID",
-    element: <SingleMovie />,
-  },
-  {
-    path: '/login-form',
-    element: <LoginForm />
-  },
-  {
-    path: '/sign-up-form',
-    element: <SignUpForm />
-  }
 ]);
 
 export default router;

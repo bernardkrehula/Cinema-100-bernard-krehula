@@ -1,4 +1,10 @@
 .login-content {
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  margin: 150px auto;
+  align-items: center;
+  gap: 30px;
   background-color: var(--nav--bg);
   padding: 40px 50px;
   border-radius: 10px;

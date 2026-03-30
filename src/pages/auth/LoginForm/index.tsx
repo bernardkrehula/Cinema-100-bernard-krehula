@@ -5,15 +5,13 @@ import React, { useState } from "react";
 import { requestLogIn } from "#/api/requestLogin";
 import { useNavigate } from "react-router";
 import * as v from "valibot";
-import { ValidationError } from "#/helpers/ValidationError";
 import { GenericError } from "#/helpers/GenericError";
 
 type LoginFormType = {
-  setHasAccount: (value: boolean) => void;
   handleDemoLogin: () => void;
 };
 
-const LoginForm = ({ setHasAccount, handleDemoLogin }: LoginFormType) => {
+const LoginForm = ({ handleDemoLogin }: LoginFormType) => {
   const [inputValue, setInputValue] = useState<{
     email: string;
     password: string;
@@ -31,7 +29,7 @@ const LoginForm = ({ setHasAccount, handleDemoLogin }: LoginFormType) => {
     setInputValue({ ...inputValue, [name]: value });
   };
 
-  const handleHasAccount = () => setHasAccount(false);
+  const handleSingUpReddirection = () => navigate("/sign-up");
 
   const resetInputValue = () =>
     setInputValue((prev) => ({ ...prev, email: "", password: "" }));
@@ -112,7 +110,7 @@ const LoginForm = ({ setHasAccount, handleDemoLogin }: LoginFormType) => {
             <span>Don't have account ?</span>
             <Btn
               type="button"
-              onClick={handleHasAccount}
+              onClick={handleSingUpReddirection}
               variation="danger"
               size="md"
             >
