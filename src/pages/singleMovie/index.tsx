@@ -1,4 +1,4 @@
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import "./index.css";
 import { requestSingleMovie } from "#/api/requestSingleMovie";
 import { useQuery } from "@tanstack/react-query";
@@ -8,12 +8,23 @@ import SliderImg from "../homepage/slider/SliderImg";
 
 const SingleMovie = () => {
   const { movieID } = useParams();
-  const { data: movie } = useQuery({
+  const { data: movie, isLoading } = useQuery({
     queryKey: [`movie-${movieID}`],
     queryFn: () => requestSingleMovie(movieID),
   });
 
-  if (!movie) return;
+  if(isLoading) return (
+    <div className="single-movie">
+      <NavBar />
+      <div className="single-movie-content">
+        <div className="movie-frame"id="movie-frame-overlay">
+          <div className="single-movie-overlay" />
+          <div className="movie-trailer-overlay" />
+        </div>
+      </div>
+    </div>
+  );
+
   const {
     id,
     title,

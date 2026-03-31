@@ -1,5 +1,5 @@
 import Btn from "#/components/ui/btn";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import "./index.css";
 import { FaPowerOff } from "react-icons/fa6";
 import Logo from "#/components/ui/logo";
@@ -27,7 +27,7 @@ const NavBar = () => {
 
   return (
     <nav className="navbar">
-      <div className="loading-line" style={{ width: !isLoading ? "0" : "100%" }} />
+      <div className="loading-line" style={{ width: isLoading ? "0" : "100%" }} />
       <Logo onClick={navigateToHomepage} variation="small" />
       <span className="welcome-message">Welcome back, Guest</span>
       <div className="logout-option">

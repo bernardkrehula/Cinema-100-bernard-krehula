@@ -3,15 +3,12 @@ import Input from "#/components/ui/input";
 import Btn from "#/components/ui/btn";
 import React, { useState } from "react";
 import { requestLogIn } from "#/api/requestLogin";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import * as v from "valibot";
-import { GenericError } from "#/helpers/GenericError";
+import { GenericError } from "#/utils/GenericError";
+import { UserAuth } from "#/context/AuthContext";
 
-type LoginFormType = {
-  handleDemoLogin: () => void;
-};
-
-const LoginForm = ({ handleDemoLogin }: LoginFormType) => {
+const LoginForm = () => {
   const [inputValue, setInputValue] = useState<{
     email: string;
     password: string;
@@ -21,7 +18,10 @@ const LoginForm = ({ handleDemoLogin }: LoginFormType) => {
   });
   const [disbaleBtn, setDisableBtn] = useState<boolean>(false);
   const [errorMessages, setErrorMessages] = useState<string | undefined>("");
+  const { DemoLogin } = UserAuth();
   const navigate = useNavigate();
+
+  const handleDemoLogin = () => DemoLogin(navigate);
 
   const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -40,7 +40,6 @@ const LoginForm = ({ handleDemoLogin }: LoginFormType) => {
       setDisableBtn(false);
     }, 5000);
   };
-  //Dodati valibot
 
   const LocalErrorValidator = () => {
     const LoginScheme = v.object({

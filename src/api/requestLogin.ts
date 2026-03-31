@@ -1,5 +1,5 @@
 import supabase from "#/config/supabaseClientVite";
-import { GenericError } from "#/helpers/GenericError";
+import { GenericError } from "#/utils/GenericError";
 
 type LoginType = {
   email: string;
@@ -16,7 +16,7 @@ export const requestLogIn = async (inputValue: LoginType) => {
     });
     if (error) return { success: false, error };
     return { success: true, data };
-  } catch (error: unknown) {
+  } catch (error) {
     throw new GenericError(error);
   }
 };

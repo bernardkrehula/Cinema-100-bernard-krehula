@@ -44,6 +44,32 @@
   justify-content: space-between;
   gap: 6px;
 }
+#movie-frame-overlay{
+  margin-top: 84.4px;
+}
+.single-movie-overlay{
+  width: 270.46px;
+  height: 402.4px;
+  background-color: rgb(95, 95, 95);
+  animation: pulse 1.5s infinite;
+}
+.movie-trailer-overlay {
+  width: 654.4px;
+  height: 402.4px;
+  background-color: rgb(95, 95, 95);
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 .single-movie-content img {
   height: 400px;
 }
@@ -89,11 +115,11 @@
   font-weight: 500;
 }
 .director-info,
-.writers-info{
+.writers-info {
   font-size: 1.5rem;
   color: rgba(255, 255, 255, 0.75);
 }
-.writers-info{
+.writers-info {
   display: flex;
   flex-direction: column;
   gap: 2px;

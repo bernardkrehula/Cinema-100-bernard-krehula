@@ -1,22 +1,24 @@
 import { createBrowserRouter } from "react-router-dom";
 import Homepage from "./pages/homepage";
-import SingleMovie from "./pages/singleMovie";
+import SingleMovie from "./pages/SingleMovie";
 import LoginForm from "./pages/auth/LoginForm";
 import SignUpForm from "./pages/auth/SignUpForm";
 import { AuthContextProvider } from "./context/AuthContext";
-import { Outlet } from "react-router";
+import { Outlet } from "react-router-dom";
+import ProgressBar from "./components/ui/ProgressBar";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <AuthContextProvider>
+        <ProgressBar/>
         <Outlet />
       </AuthContextProvider>
     ),
     children: [
       {
-        path: "/",
+        index: true,
         element: <LoginForm />,
       },
       {
@@ -24,11 +26,11 @@ const router = createBrowserRouter([
         element: <SignUpForm />,
       },
       {
-        path: "homepage",
+        path: "/homepage",
         element: <Homepage />,
       },
       {
-        path: "movie/:movieID",
+        path: "/movie/:movieID",
         element: <SingleMovie />,
       },
     ],

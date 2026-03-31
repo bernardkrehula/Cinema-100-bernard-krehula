@@ -5,7 +5,7 @@ import MovieIcon from "./MovieIcon";
 import Btn from "#/components/ui/btn";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import MovieToolbar from "#/components/layouts/movieToolbar";
+import MovieToolbar from "#/components/layouts/MovieToolbar";
 import { requestFilteredMovies } from "#/api/requestFilteredMovies";
 
 const MovieList = () => {

@@ -1,10 +1,10 @@
 import NavBar from "#/components/layouts/navbar";
 import { useEffect } from "react";
-import MovieList from "../movieList";
+import MovieList from "#/components/layouts/MovieList";
 import "./index.css";
 import Slider from "./slider";
 import { UserAuth } from "#/context/AuthContext";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 const Homepage = () => {
   const navigate = useNavigate();

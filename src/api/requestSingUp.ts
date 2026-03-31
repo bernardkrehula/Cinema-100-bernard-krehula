@@ -1,4 +1,5 @@
 import supabase from "#/config/supabaseClientVite";
+import { GenericError } from "#/utils/GenericError";
 
 type SingInType = {
   email: string;
@@ -16,6 +17,6 @@ export const requestSignUp = async (inputValue: SingInType) => {
     if (error) return { success: false, error };
     return { success: true, data };
   } catch (error) {
-    throw Error;
+    throw new GenericError(error);
   }
 };
