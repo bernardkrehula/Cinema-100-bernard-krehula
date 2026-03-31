@@ -1,13 +1,7 @@
 import "./index.css";
 import Btn from "../btn";
 import { IoIosSearch } from "react-icons/io";
-
-type SearchBarType = {
-  placeholder: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-  onClick?: () => void;
-};
+import type { SearchBarType } from "#/types/ui.types.ts/SearchBarType";
 
 const SearchBar = ({ onClick, onChange, onKeyDown, placeholder }: SearchBarType) => {
   return (

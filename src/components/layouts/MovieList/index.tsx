@@ -6,7 +6,7 @@ import Btn from "#/components/ui/btn";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import MovieToolbar from "#/components/layouts/MovieToolbar";
-import { requestFilteredMovies } from "#/api/requestFilteredMovies";
+import { requestFilteredMovies } from "#/api/movies/requestFilteredMovies";
 
 const MovieList = () => {
   const [movieFilter, setMovieFilter] = useState({

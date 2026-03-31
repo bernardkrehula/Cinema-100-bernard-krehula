@@ -6,7 +6,7 @@ import { IoBookmark } from "react-icons/io5";
 import { IoSearchOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
-const SliderImg = ({ src, id }: { src: string, id?: string }) => {
+const MovieImg = ({ src, id }: { src: string, id?: string }) => {
   const [savedMovie, setSavedMovie] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -15,8 +15,8 @@ const SliderImg = ({ src, id }: { src: string, id?: string }) => {
   const openMovie = () => navigate(`/movie/${id}`);
 
   return (
-    <article className="sliderImg">
-      <div className="movie-card-overlay">
+    <article className="movie-img">
+      <div className="movie-img-overlay">
         <Btn type="button" onClick={handleSaveMovie} variation="secondary-small">
           {savedMovie ? (
             <IoBookmark className="checked-bookmark" />
@@ -32,4 +32,4 @@ const SliderImg = ({ src, id }: { src: string, id?: string }) => {
     </article>
   );
 };
-export default SliderImg;
+export default MovieImg;

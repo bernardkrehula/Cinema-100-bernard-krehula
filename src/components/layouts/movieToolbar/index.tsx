@@ -5,20 +5,10 @@ import Btn from "#/components/ui/btn";
 import { IoBookmark, IoBookmarkOutline } from "react-icons/io5";
 import { FaHouse } from "react-icons/fa6";
 import { IoMdArrowDropdown } from "react-icons/io";
-import { requestGenreTypes } from "#/api/requestGenreTypes";
+import { requestGenreTypes } from "#/api/genre/requestGenreTypes";
 import { debounce } from "throttle-debounce";
-
-type GenresType = { genre: string[] }[];
-type MovieFilterState = {
-  filters: {
-    search: string;
-    genre: string | null;
-  };
-  range: {
-    from: number;
-    to: number;
-  };
-};
+import type { GenresType } from "#/types/genre.types.ts/GenresType";
+import type { MovieFilterState } from "#/types/movie.types.ts/MovieFilterState";
 
 const MovieToolbar = ({
   setMovieFilter,

@@ -1,9 +1,5 @@
 import supabase from "#/config/supabaseClientVite";
-
-type FilteredMovies = {
-  filters: { search: string; genre: string | null };
-  range: { from: number; to: number };
-};
+import type { FilteredMovies } from "#/types/movie.types.ts/FilteredMovies";
 
 export const requestFilteredMovies = async ({
   filters,

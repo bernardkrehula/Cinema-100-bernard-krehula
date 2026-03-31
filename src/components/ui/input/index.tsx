@@ -1,14 +1,6 @@
+import type { InputType } from "#/types/ui.types.ts/InputType";
 import "./index.css";
 
-type InputType = {
-  type?: string;
-  value?: string;
-  placeholder?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  variaton?: string;
-  name: string;
-};
-//Dodati variation umjesto className
 const Input = ({
   type = "text",
   value = "",

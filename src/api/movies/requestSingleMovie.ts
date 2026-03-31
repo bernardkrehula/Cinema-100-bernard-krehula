@@ -7,7 +7,6 @@ export const requestSingleMovie = async (id: string | undefined) => {
     .select()
     .eq('id', id)
     .single()
-    console.log(id, response)
     return response.data;
   } catch (error) {
     throw Error

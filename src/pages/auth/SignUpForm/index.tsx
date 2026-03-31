@@ -2,7 +2,7 @@ import "./index.css";
 import Input from "#/components/ui/input";
 import Btn from "#/components/ui/btn";
 import React, { useState } from "react";
-import { requestSignUp } from "#/api/requestSingUp";
+import { requestSignUp } from "#/api/auth/requestSingUp";
 import * as v from "valibot";
 import { useNavigate } from "react-router-dom";
 import { UserAuth } from "#/context/AuthContext";

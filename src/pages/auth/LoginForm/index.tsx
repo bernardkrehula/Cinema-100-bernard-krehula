@@ -2,7 +2,7 @@ import "./index.css";
 import Input from "#/components/ui/input";
 import Btn from "#/components/ui/btn";
 import React, { useState } from "react";
-import { requestLogIn } from "#/api/requestLogin";
+import { requestLogIn } from "#/api/auth/requestLogin";
 import { useNavigate } from "react-router-dom";
 import * as v from "valibot";
 import { GenericError } from "#/utils/GenericError";

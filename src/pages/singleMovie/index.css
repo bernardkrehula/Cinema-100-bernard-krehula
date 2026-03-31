@@ -43,6 +43,7 @@
   display: flex;
   justify-content: space-between;
   gap: 6px;
+  height: 402.4px;
 }
 #movie-frame-overlay{
   margin-top: 84.4px;

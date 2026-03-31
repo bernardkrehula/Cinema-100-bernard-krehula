@@ -1,9 +1,5 @@
+import type { LogoType } from "#/types/ui.types.ts/LogoType";
 import "./index.css";
-
-type LogoType = {
-    onClick?: () => void;
-    variation?: string;
-}
 
 const Logo = ({onClick, variation}: LogoType) => {
   return (

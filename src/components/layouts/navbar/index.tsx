@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "./index.css";
 import { FaPowerOff } from "react-icons/fa6";
 import Logo from "#/components/ui/logo";
-import { requestSingOut } from "#/api/requestSignOut";
+import { requestSingOut } from "#/api/auth/requestSignOut";
 import { useEffect, useState } from "react";
 
 const NavBar = () => {
@@ -27,7 +27,7 @@ const NavBar = () => {
 
   return (
     <nav className="navbar">
-      <div className="loading-line" style={{ width: isLoading ? "0" : "100%" }} />
+      {/* <div className="loading-line" style={{ width: isLoading ? "0" : "100%" }} /> */}
       <Logo onClick={navigateToHomepage} variation="small" />
       <span className="welcome-message">Welcome back, Guest</span>
       <div className="logout-option">

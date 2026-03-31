@@ -1,13 +1,9 @@
-import { requestLogIn } from "#/api/requestLogin";
+import { requestLogIn } from "#/api/auth/requestLogin";
 import supabase from "#/config/supabaseClientVite";
+import type { AuthContextType } from "#/types/auth.types.ts/AuthContextType";
 import type { Session } from "@supabase/supabase-js";
 import type { ReactNode } from "react";
 import { createContext, useContext, useEffect, useState } from "react";
-
-type AuthContextType = {
-  session: Session | null | undefined;
-  DemoLogin: (navigate: (path: string) => void) => void;
-};
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType);
 
@@ -34,7 +30,9 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ session, DemoLogin }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ session, DemoLogin }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

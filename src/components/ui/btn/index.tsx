@@ -1,14 +1,5 @@
+import type { BtnType } from "#/types/ui.types.ts/BtnType";
 import "./index.css";
-import type { ReactNode } from 'react';
-
-type BtnType = {
-  variation?: string;
-  size?: string;
-  type: "button" | "submit" | "reset";
-  onClick?: () => void;
-  children: string | ReactNode;
-  disabled?: boolean;
-};
 
 const Btn = ({
   variation,
@@ -16,10 +7,15 @@ const Btn = ({
   type = "button",
   onClick = () => {},
   children,
-  disabled
+  disabled,
 }: BtnType) => {
   return (
-    <button onClick={onClick} className={`btn ${variation} ${size}`} type={type} disabled={disabled} >
+    <button
+      onClick={onClick}
+      className={`btn ${variation} ${size}`}
+      type={type}
+      disabled={disabled}
+    >
       {children}
     </button>
   );

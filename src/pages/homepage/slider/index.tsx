@@ -1,11 +1,11 @@
 import "./index.css";
-import SliderImg from "./SliderImg";
+import SliderImg from "../../../components/ui/MovieImg";
 import { useQuery } from "@tanstack/react-query";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useState } from "react";
 import Btn from "#/components/ui/btn";
-import { requestTrendingMovies } from "#/api/requestTrendingMovies";
+import { requestTrendingMovies } from "#/api/movies/requestTrendingMovies";
 
 const Slider = () => {
   const [position, setPosition] = useState<number>(0);
@@ -15,11 +15,10 @@ const Slider = () => {
     queryKey: ["trending-movies"],
     queryFn: () => requestTrendingMovies(),
   });
-  
-  
+
   const slideOnClick = (side: string) => {
     if (!trendingMovies || trendingMovies.length === 0) return;
-    
+
     const visibleMovies = 4;
     const totalPages = trendingMovies.length / visibleMovies;
     setAllPages(totalPages);
@@ -78,13 +77,15 @@ const Slider = () => {
             className="slider-box-content"
             style={{ transform: `translateX(${position}px)` }}
           >
-            {isLoading ? Array.from({length: 4}).map((_, i) => (
-              <div key={i} className="skeleton"/>
-            )): trendingMovies?.map((movie) => {
-              const { id, image } = movie;
+            {isLoading
+              ? Array.from({ length: 4 }).map((_, i) => (
+                  <div key={i} className="skeleton" />
+                ))
+              : trendingMovies?.map((movie) => {
+                  const { id, image } = movie;
 
-              return <SliderImg key={id} src={image} id={id} />;
-            })}
+                  return <SliderImg key={id} src={image} id={id} />;
+                })}
           </div>
         </div>
         <Btn type="button" onClick={() => slideOnClick("right")}>
