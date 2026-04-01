@@ -1,8 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import Homepage from "./pages/homepage";
-import SingleMovie from "./pages/SingleMovie";
-import LoginForm from "./pages/auth/LoginForm";
-import SignUpForm from "./pages/auth/SignUpForm";
+import SingleMovie from "./pages/SingleMovie/index.tsx";
+import LoginForm from "./pages/auth/LoginForm/index.tsx";
+import SignUpForm from "./pages/auth/SignUpForm/index.tsx";
 
 const router = createBrowserRouter([
   {
