@@ -39,3 +39,21 @@ Napraviti onako da se na load prikazu ikone sive kao na youtube bez contenta
 -Odraditi acc i demo acc login
 18.3
 -Odraditi ikone sive kod loadinga kao na yt
+
+28.3
+-Odraditi customClassu generic error // requestLogin
+-Dodati valibot // LoginForm
+-Promijeniti da je auth folder u pages i da se pristupi login i sign formi sa routerom
+
+31.3
+-Maknuti sve types u types folder
+-Napraviti za svaki query hook
+-Dodati generic error nas svaki error 
+
+
+31.3 u 11h 
+-Supabase odraduje try catch blok za mene a ja ga trebam samo staviti u njihov custom error
+-Napraviti custom hook useAuth
+
+1.4 
+-Nije dobra praksa disable btn nego rade staviti spinner da se vrti unutar btn dok se salje request
