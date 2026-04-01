@@ -1,18 +1,20 @@
 import supabase from "#/config/supabaseClientVite";
 import type { CredentialsType } from "#/types/auth.types.ts/CredentialsType";
 import { GenericError } from "#/utils/GenericError";
+import { isAuthApiError } from "@supabase/supabase-js";
 
 export const requestSignUp = async (inputValue: CredentialsType) => {
   const { email, password } = inputValue;
-
-  try {
-    const { data, error } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-    });
-    if (error) return { success: false, error };
-    return { success: true, data };
-  } catch (error) {
-    throw new GenericError(error);
+  const { data, error } = await supabase.auth.signUp({
+    email: email,
+    password: password,
+  });
+  if (error) {
+    if (isAuthApiError(error)) {
+      return { success: false, error };
+    } else {
+      throw new GenericError();
+    }
   }
+  return { success: true, data };
 };

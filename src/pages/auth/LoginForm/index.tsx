@@ -2,11 +2,9 @@ import "./index.css";
 import Input from "#/components/ui/input";
 import Btn from "#/components/ui/btn";
 import React, { useState } from "react";
-import { requestLogIn } from "#/api/auth/requestLogin";
 import { useNavigate } from "react-router-dom";
-import * as v from "valibot";
-import { GenericError } from "#/utils/GenericError";
 import { UserAuth } from "#/context/AuthContext";
+import { useAuth } from "#/hooks/useAuth";
 
 const LoginForm = () => {
   const [inputValue, setInputValue] = useState<{
@@ -17,8 +15,8 @@ const LoginForm = () => {
     password: "",
   });
   const [disbaleBtn, setDisableBtn] = useState<boolean>(false);
-  const [errorMessages, setErrorMessages] = useState<string | undefined>("");
   const { DemoLogin } = UserAuth();
+  const {handleAuthentication, error} = useAuth();
   const navigate = useNavigate();
 
   const handleDemoLogin = () => DemoLogin(navigate);
@@ -36,51 +34,20 @@ const LoginForm = () => {
 
   const disableSingUpBtn = () => {
     setTimeout(() => {
-      setErrorMessages("");
       setDisableBtn(false);
     }, 5000);
   };
-
-  const LocalErrorValidator = () => {
-    const LoginScheme = v.object({
-      email: v.pipe(
-        v.string("Your email must be a string."),
-        v.nonEmpty("Please enter your email."),
-        v.email("The email address is badly formatted."),
-      ),
-      password: v.pipe(
-        v.string("Your password must be a string."),
-        v.nonEmpty("Please enter your password."),
-        v.minLength(8, "Your password must have 8 characters or more."),
-      ),
-    });
-    const response = v.parse(LoginScheme, inputValue);
-    return response;
-  };
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const name = e.currentTarget.name;
     setDisableBtn(true);
-    try {
-      LocalErrorValidator();
-      const result = await requestLogIn(inputValue);
-      resetInputValue();
-      if (result.success) return navigate("/homepage");
-    } catch (error: unknown) {
-      if (error instanceof v.ValiError) {
-        console.log(error.message);
-        setErrorMessages(error.message);
-      } else if (error instanceof GenericError) {
-        console.error("GenericError caught:", error.message);
-        setErrorMessages("Something went wrong, please try again.");
-      } else {
-        console.error("Unknown error:", error);
-      }
-      disableSingUpBtn();
-    }
+    handleAuthentication(inputValue, name);
+    resetInputValue();
+    disableSingUpBtn();
   };
   return (
     <div className="login-content">
-      <form className="login-window" onSubmit={handleLogin}>
+      <form className="login-window" name="login" onSubmit={handleLogin}>
         <h1 className="login-title">Log in</h1>
         <Input
           name="email"
@@ -95,7 +62,7 @@ const LoginForm = () => {
           type="password"
           value={inputValue.password}
         />
-        <h2 className="login-error-message">{errorMessages}</h2>
+        <h2 className="login-error-message">{error}</h2>
         <Btn
           type="submit"
           variation={`secondary ${disbaleBtn ? "disabled" : "none"}`}

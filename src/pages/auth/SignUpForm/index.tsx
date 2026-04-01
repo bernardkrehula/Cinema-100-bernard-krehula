@@ -2,11 +2,9 @@ import "./index.css";
 import Input from "#/components/ui/input";
 import Btn from "#/components/ui/btn";
 import React, { useState } from "react";
-import { requestSignUp } from "#/api/auth/requestSingUp";
-import * as v from "valibot";
 import { useNavigate } from "react-router-dom";
 import { UserAuth } from "#/context/AuthContext";
-import { GenericError } from "#/utils/GenericError";
+import { useAuth } from "#/hooks/useAuth";
 
 const SignUpForm = () => {
   const [inputValue, setInputValue] = useState<{
@@ -17,8 +15,8 @@ const SignUpForm = () => {
     password: "",
   });
   const [disbaleBtn, setDisableBtn] = useState<boolean>(false);
-  const [errorMessages, setErrorMessages] = useState<string | undefined>("");
   const { DemoLogin } = UserAuth();
+  const { handleAuthentication, error } = useAuth();
   const navigate = useNavigate();
 
   const handleDemoLogin = () => DemoLogin(navigate);
@@ -36,52 +34,27 @@ const SignUpForm = () => {
 
   const disableSingUpBtn = () => {
     setTimeout(() => {
-      setErrorMessages("");
       setDisableBtn(false);
     }, 5000);
   };
-  const LocalErrorValidator = () => {
-    const LoginScheme = v.object({
-      email: v.pipe(
-        v.string("Your email must be a string."),
-        v.nonEmpty("Please enter your email."),
-        v.email("The email address is badly formatted."),
-      ),
-      password: v.pipe(
-        v.string("Your password must be a string."),
-        v.nonEmpty("Please enter your password."),
-        v.minLength(8, "Your password must have 8 characters or more."),
-      ),
-    });
-    const response = v.parse(LoginScheme, inputValue);
-    return response;
-  };
-
+  
+  //Napraviti hook useAuth
+  //Taj useAuth treba da ima state error data i moze loading
+  //Treba da primi fetch funkciju primi login ili sing up
+  //I vrati data error i loading
+  
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const name = e.currentTarget.name;
     setDisableBtn(true);
-    try {
-      LocalErrorValidator();
-      const result = await requestSignUp(inputValue);
-      resetInputValue();
-      if (result.success) return navigate("/homepage");
-    } catch (error: unknown) {
-      if (error instanceof v.ValiError) {
-        console.log(error.message);
-        setErrorMessages(error.message);
-      } else if (error instanceof GenericError) {
-        console.error("GenericError caught:", error.message);
-        setErrorMessages("Something went wrong, please try again.");
-      } else {
-        console.error("Unknown error:", error);
-      }
-      disableSingUpBtn();
-    }
+    handleAuthentication(inputValue, name);
+    resetInputValue();
+    disableSingUpBtn();
   };
 
   return (
     <div className="sing-up-content">
-      <form className="sing-up-window" onSubmit={handleSignIn}>
+      <form className="sing-up-window" name="sing-up" onSubmit={handleSignIn}>
         <h1 className="sing-up-title">Sign in</h1>
         <Input
           name="email"
@@ -96,7 +69,7 @@ const SignUpForm = () => {
           placeholder="Enter new password"
           value={inputValue.password}
         />
-        <h2 className="sign-up-error-message">{errorMessages}</h2>
+        <h2 className="sign-up-error-message">{error}</h2>
         <Btn
           type="submit"
           variation={`secondary ${disbaleBtn ? "disabled" : "none"}`}
