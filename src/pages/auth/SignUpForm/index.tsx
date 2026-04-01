@@ -3,7 +3,6 @@ import Input from "#/components/ui/input";
 import Btn from "#/components/ui/btn";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserAuth } from "#/context/AuthContext";
 import { useAuth } from "#/hooks/useAuth";
 
 const SignUpForm = () => {
@@ -15,11 +14,8 @@ const SignUpForm = () => {
     password: "",
   });
   const [disbaleBtn, setDisableBtn] = useState<boolean>(false);
-  const { DemoLogin } = UserAuth();
-  const { handleAuthentication, error } = useAuth();
+  const { handleAuthentication, DemoLogin, error } = useAuth();
   const navigate = useNavigate();
-
-  const handleDemoLogin = () => DemoLogin(navigate);
 
   const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -37,12 +33,7 @@ const SignUpForm = () => {
       setDisableBtn(false);
     }, 5000);
   };
-  
-  //Napraviti hook useAuth
-  //Taj useAuth treba da ima state error data i moze loading
-  //Treba da primi fetch funkciju primi login ili sing up
-  //I vrati data error i loading
-  
+
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const name = e.currentTarget.name;
@@ -94,7 +85,7 @@ const SignUpForm = () => {
             <span>Or,</span>
             <Btn
               type="button"
-              onClick={handleDemoLogin}
+              onClick={DemoLogin}
               variation="danger"
               size="md"
             >

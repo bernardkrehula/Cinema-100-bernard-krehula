@@ -3,7 +3,6 @@ import Input from "#/components/ui/input";
 import Btn from "#/components/ui/btn";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserAuth } from "#/context/AuthContext";
 import { useAuth } from "#/hooks/useAuth";
 
 const LoginForm = () => {
@@ -15,11 +14,8 @@ const LoginForm = () => {
     password: "",
   });
   const [disbaleBtn, setDisableBtn] = useState<boolean>(false);
-  const { DemoLogin } = UserAuth();
-  const {handleAuthentication, error} = useAuth();
+  const {handleAuthentication, DemoLogin, error} = useAuth();
   const navigate = useNavigate();
-
-  const handleDemoLogin = () => DemoLogin(navigate);
 
   const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -87,7 +83,7 @@ const LoginForm = () => {
             <span>Or,</span>
             <Btn
               type="button"
-              onClick={handleDemoLogin}
+              onClick={DemoLogin}
               variation="danger"
               size="md"
             >

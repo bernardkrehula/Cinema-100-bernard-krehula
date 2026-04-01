@@ -1,10 +1,11 @@
 import { requestLogIn } from "#/api/auth/requestLogin";
 import { requestSignUp } from "#/api/auth/requestSingUp";
+import supabase from "#/config/supabaseClientVite";
 import type { AuthDataType } from "#/types/auth.types.ts/AuthDataType";
 import type { CredentialsType } from "#/types/auth.types.ts/CredentialsType";
 import { GenericError } from "#/utils/GenericError";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, type Session, type SessionData } from "react-router-dom";
 import * as v from "valibot";
 
 export const useAuth = () => {
@@ -17,7 +18,34 @@ export const useAuth = () => {
     },
   });
   const [isLoading, setLoading] = useState<boolean>(false);
+  const [session, setSession] = useState<Session<
+    SessionData,
+    SessionData
+  > | null>(null);
   const navigate = useNavigate();
+
+  const DemoLogin = async () => {
+    const inputValue = {
+      email: "demo@demo.com",
+      password: "demo1234",
+    };
+    const result = await requestLogIn(inputValue);
+    if (result.success) return navigate("/homepage");
+  };
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session as Session<SessionData, SessionData> | null);
+    });
+
+    supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session as Session<SessionData, SessionData> | null);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!session) navigate("/");
+    else navigate("/homepage");
+  }, [session]);
 
   const LocalErrorValidator = (inputValue: CredentialsType) => {
     const LoginScheme = v.object({
@@ -40,15 +68,17 @@ export const useAuth = () => {
     name: string,
   ) => {
     try {
-        
       LocalErrorValidator(inputValue);
-      const result = name != "login" ? await requestSignUp(inputValue) : await requestLogIn(inputValue);
+      const result =
+        name != "login"
+          ? await requestSignUp(inputValue)
+          : await requestLogIn(inputValue);
       if (result.success) {
         setData(result as AuthDataType);
         navigate("/homepage");
       } else if (!result.success) {
         console.log(result);
-        setError(result.error?.message); 
+        setError(result.error?.message);
       }
     } catch (error: unknown) {
       if (error instanceof v.ValiError) {
@@ -63,9 +93,9 @@ export const useAuth = () => {
   };
   const cleanErorrs = () => {
     setTimeout(() => {
-        setError("");
-    }, 5000)
-  }
+      setError("");
+    }, 5000);
+  };
 
-  return { data, error, isLoading, handleAuthentication };
+  return { data, error, isLoading, handleAuthentication, DemoLogin };
 };
