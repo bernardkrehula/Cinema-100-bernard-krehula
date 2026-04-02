@@ -28,21 +28,25 @@ export const useAuth = () => {
       password: "demo1234",
     };
     const result = await requestLogIn(inputValue);
-    if (result.success) return navigate("/homepage");
+    if(result.success) return navigate('/homepage');
   };
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session);
     });
 
-    supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
+    const { data: {subscription}} = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+
+    const clearSession = () => subscription.unsubscribe();
+
+    return clearSession();
   }, []);
 
   useEffect(() => {
-    if (!session) navigate("/");
-    else navigate("/homepage");
+    if (session === null) return
+    navigate("/homepage");
   }, [session]);
 
   const LocalErrorValidator = (inputValue: CredentialsType) => {
