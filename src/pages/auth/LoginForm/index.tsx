@@ -4,6 +4,7 @@ import Btn from "#/components/ui/btn";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "#/hooks/useAuth";
+import LoadingSpinner from "#/components/ui/LoadingSpinner";
 
 const LoginForm = () => {
   const [inputValue, setInputValue] = useState<{
@@ -13,8 +14,7 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
-  const [disbaleBtn, setDisableBtn] = useState<boolean>(false);
-  const {handleAuthentication, DemoLogin, error} = useAuth();
+  const {handleAuthentication, DemoLogin, error, isLoading} = useAuth();
   const navigate = useNavigate();
 
   const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,18 +28,12 @@ const LoginForm = () => {
   const resetInputValue = () =>
     setInputValue((prev) => ({ ...prev, email: "", password: "" }));
 
-  const disableSingUpBtn = () => {
-    setTimeout(() => {
-      setDisableBtn(false);
-    }, 5000);
-  };
+
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const name = e.currentTarget.name;
-    setDisableBtn(true);
     handleAuthentication(inputValue, name);
     resetInputValue();
-    disableSingUpBtn();
   };
   return (
     <div className="login-content">
@@ -61,11 +55,10 @@ const LoginForm = () => {
         <h2 className="login-error-message">{error}</h2>
         <Btn
           type="submit"
-          variation={`secondary ${disbaleBtn ? "disabled" : "none"}`}
+          variation={`secondary`}
           size="lg"
-          disabled={disbaleBtn}
         >
-          Log in
+          {isLoading ? <LoadingSpinner/> : "Log in"}
         </Btn>
         <div className="login-questions">
           <div className="login-question-section">

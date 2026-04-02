@@ -56,4 +56,4 @@ Napraviti onako da se na load prikazu ikone sive kao na youtube bez contenta
 -Napraviti custom hook useAuth
 
 1.4 
--Nije dobra praksa disable btn nego rade staviti spinner da se vrti unutar btn dok se salje request
+-Nije dobra praksa disable btn nego rade staviti spinner da se vrti unutar btn dok se salje request`

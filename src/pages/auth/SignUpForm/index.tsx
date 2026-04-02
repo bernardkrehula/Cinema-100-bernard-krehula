@@ -4,6 +4,7 @@ import Btn from "#/components/ui/btn";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "#/hooks/useAuth";
+import LoadingSpinner from "#/components/ui/LoadingSpinner";
 
 const SignUpForm = () => {
   const [inputValue, setInputValue] = useState<{
@@ -14,7 +15,7 @@ const SignUpForm = () => {
     password: "",
   });
   const [disbaleBtn, setDisableBtn] = useState<boolean>(false);
-  const { handleAuthentication, DemoLogin, error } = useAuth();
+  const { handleAuthentication, DemoLogin, error, isLoading } = useAuth();
   const navigate = useNavigate();
 
   const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,19 +29,12 @@ const SignUpForm = () => {
   const resetInputValue = () =>
     setInputValue((prev) => ({ ...prev, email: "", password: "" }));
 
-  const disableSingUpBtn = () => {
-    setTimeout(() => {
-      setDisableBtn(false);
-    }, 5000);
-  };
-
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const name = e.currentTarget.name;
     setDisableBtn(true);
     handleAuthentication(inputValue, name);
     resetInputValue();
-    disableSingUpBtn();
   };
 
   return (
@@ -67,7 +61,7 @@ const SignUpForm = () => {
           size="lg"
           disabled={disbaleBtn}
         >
-          Sign in
+          {isLoading ? <LoadingSpinner/> : "Sign in"}
         </Btn>
         <div className="sing-up-questions">
           <div className="sing-up-question-section">

@@ -112,7 +112,7 @@ const MovieList = () => {
       return prev;
     });
   };
-
+  console.log(moviePageNumbers.length)
   return (
     <div className="movie-list">
       <MovieToolbar setMovieFilter={setMovieFilter} />

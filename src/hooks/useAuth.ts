@@ -5,7 +5,8 @@ import type { AuthDataType } from "#/types/auth.types.ts/AuthDataType";
 import type { CredentialsType } from "#/types/auth.types.ts/CredentialsType";
 import { GenericError } from "#/utils/GenericError";
 import { useEffect, useState } from "react";
-import { useNavigate, type Session, type SessionData } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import type { Session } from "@supabase/supabase-js";
 import * as v from "valibot";
 
 export const useAuth = () => {
@@ -18,10 +19,7 @@ export const useAuth = () => {
     },
   });
   const [isLoading, setLoading] = useState<boolean>(false);
-  const [session, setSession] = useState<Session<
-    SessionData,
-    SessionData
-  > | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
   const navigate = useNavigate();
 
   const DemoLogin = async () => {
@@ -34,11 +32,11 @@ export const useAuth = () => {
   };
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session as Session<SessionData, SessionData> | null);
+      setSession(session);
     });
 
     supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session as Session<SessionData, SessionData> | null);
+      setSession(session);
     });
   }, []);
 
@@ -67,6 +65,7 @@ export const useAuth = () => {
     inputValue: CredentialsType,
     name: string,
   ) => {
+    setLoading(true);
     try {
       LocalErrorValidator(inputValue);
       const result =
@@ -89,6 +88,7 @@ export const useAuth = () => {
         console.error("Unknown error:", error);
       }
     }
+    setLoading(false);
     cleanErorrs();
   };
   const cleanErorrs = () => {
