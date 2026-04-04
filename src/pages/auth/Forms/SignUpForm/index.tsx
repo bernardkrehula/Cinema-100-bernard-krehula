@@ -3,10 +3,10 @@ import Input from "#/components/ui/input";
 import Btn from "#/components/ui/btn";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "#/hooks/useAuth";
+import { useAuth } from "#/pages/auth/hooks/useAuth";
 import LoadingSpinner from "#/components/ui/LoadingSpinner";
 
-const LoginForm = () => {
+const SignUpForm = () => {
   const [inputValue, setInputValue] = useState<{
     email: string;
     password: string;
@@ -14,7 +14,8 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
-  const {handleAuthentication, DemoLogin, error, isLoading} = useAuth();
+  const [disbaleBtn, setDisableBtn] = useState<boolean>(false);
+  const { handleAuthentication, DemoLogin, error, isLoading } = useAuth();
   const navigate = useNavigate();
 
   const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,63 +24,60 @@ const LoginForm = () => {
     setInputValue({ ...inputValue, [name]: value });
   };
 
-  const handleSingUpReddirection = () => navigate("/sign-up");
+  const handleLoginReddirection = () => navigate("/");
 
   const resetInputValue = () =>
     setInputValue((prev) => ({ ...prev, email: "", password: "" }));
 
-
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const name = e.currentTarget.name;
+    setDisableBtn(true);
     handleAuthentication(inputValue, name);
     resetInputValue();
   };
+
   return (
-    <div className="login-content">
-      <form className="login-window" name="login" onSubmit={handleLogin}>
-        <h1 className="login-title">Log in</h1>
+    <div className="sing-up-content">
+      <form className="sing-up-window" name="sing-up" onSubmit={handleSignIn}>
+        <h1 className="sing-up-title">Sign in</h1>
         <Input
           name="email"
           onChange={handleInputs}
-          placeholder="Email"
+          placeholder="Enter new email"
           value={inputValue.email}
         />
         <Input
+          type="password"
           name="password"
           onChange={handleInputs}
-          placeholder="Password"
-          type="password"
+          placeholder="Enter new password"
           value={inputValue.password}
         />
-        <h2 className="login-error-message">{error}</h2>
+        <h2 className="sign-up-error-message">{error}</h2>
         <Btn
           type="submit"
-          variation={`secondary`}
+          variation={`secondary ${disbaleBtn ? "disabled" : "none"}`}
           size="lg"
+          disabled={disbaleBtn}
         >
-          {isLoading ? <LoadingSpinner/> : "Log in"}
+          {isLoading ? <LoadingSpinner /> : "Sign in"}
         </Btn>
-        <div className="login-questions">
-          <div className="login-question-section">
-            <span>Don't have account ?</span>
+        <div className="sing-up-questions">
+          <div className="sing-up-question-section">
+            <span>Already have account ?</span>
             <Btn
               type="button"
-              onClick={handleSingUpReddirection}
+              onClick={handleLoginReddirection}
               variation="danger"
               size="md"
             >
-              Sign up
+              Log in
             </Btn>
           </div>
-          <div className="login-question-section">
+          <div className="sing-up-question-section">
             <span>Or,</span>
-            <Btn
-              type="button"
-              onClick={DemoLogin}
-              variation="danger"
-              size="md"
-            >
+            <Btn type="button" onClick={DemoLogin} variation="danger" size="md">
               Log in as a guest
             </Btn>
           </div>
@@ -88,4 +86,4 @@ const LoginForm = () => {
     </div>
   );
 };
-export default LoginForm;
+export default SignUpForm;
