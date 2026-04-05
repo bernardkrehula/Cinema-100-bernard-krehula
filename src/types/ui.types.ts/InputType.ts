@@ -3,5 +3,4 @@ export type InputType = {
   placeholder?: string;
   variaton?: string;
   name: string;
-  ref: React.RefObject<HTMLInputElement>
 };

@@ -1,12 +1,13 @@
 import "./index.css";
 import Input from "#/components/ui/input";
 import Btn from "#/components/ui/btn";
-import React, { useContext, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { memo, useState } from "react";
+import { useNavigate, type Session } from "react-router-dom";
 import { useAuth } from "#/pages/auth/hooks/useAuth";
 import LoadingSpinner from "#/components/ui/LoadingSpinner";
 import { requestLogIn } from "#/api/auth/requestLogin";
 import * as v from "valibot";
+import type { HandleLoginType } from "#/types/auth.types.ts/HandleLoginType";
 import type { CredentialsType } from "#/types/auth.types.ts/CredentialsType";
 
 const LoginScheme = v.object({
@@ -21,41 +22,42 @@ const LoginScheme = v.object({
     v.minLength(8, "Your password must have 8 characters or more."),
   ),
 });
-const login = async () => {};
+const handleLogin = async (credentials: CredentialsType) => {
+  if(credentials === undefined) return {success: false}
+  const result = await requestLogIn(credentials);
+  console.log("rezulat: ", result, credentials);
+  return result;
+};
 
 const LoginForm = () => {
-  const { data, error, isLoading } = useAuth(login, LoginScheme);
+  const [credentials, setCredentials] = useState<CredentialsType>({
+    email: "",
+    password: "",
+  });
+  const { data, error, isLoading } = useAuth(handleLogin, LoginScheme);
   const navigate = useNavigate();
-
   const handleSingUpReddirection = () => navigate("/sign-up");
 
   const resetInputValue = () => {};
-  const handleLogin = async(e: React.FormEvent<HTMLFormElement>) => {
+  const getLoginData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const email = formData.get('email');
-    const password = formData.get('password');
-    const credentials = {email, password};
-    await requestLogIn(credentials)
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const credentials = { email, password };
+    setCredentials(credentials);
+    return await handleLogin(credentials);
   };
-  /*  const DemoLogin = async () => {
-    const inputValue = {
-      email: "demo@demo.com",
-      password: "demo1234",
-    };
-    const result = await requestLogIn(inputValue);
-    if (result.success) return navigate("/homepage");
-  };
- */
+  
   return (
     <div className="login-content">
-      <form className="login-window" onSubmit={handleLogin}>
+      <form className="login-window" onSubmit={getLoginData}>
         <h1 className="login-title">Log in</h1>
         <Input name="email" placeholder="Email" type="email" />
         <Input name="password" placeholder="Password" type="password" />
-        <h2 className="login-error-message">{/* error */}</h2>
+        <h2 className="login-error-message">{error}</h2>
         <Btn type="submit" variation={`secondary`} size="lg">
-          {/* isLoading ? <LoadingSpinner /> : "Log in" */}
+          {isLoading ? <LoadingSpinner /> : "Log in"}
         </Btn>
         <div className="login-questions">
           <div className="login-question-section">

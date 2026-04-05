@@ -1,19 +1,22 @@
 import type { AuthDataType } from "#/types/auth.types.ts/AuthDataType";
 import type { CredentialsType } from "#/types/auth.types.ts/CredentialsType";
 import { GenericError } from "#/utils/GenericError";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useReducer, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as v from "valibot";
-
 
 type UseAuthType = {
   handler: () => void;
   authScheme: () => void;
 };
+const errorReducer = () => {
+
+}
 
 export const useAuth = (handler, authScheme) => {
-  const [error, setError] = useState<string>("");
-  const [data, setData] = useState<AuthDataType>({
+  const [error, dispatchError] = useReducer(errorReducer, error)
+/*   const [error, setError] = useState<string>("");
+ */  const [data, setData] = useState<AuthDataType>({
     success: false,
     data: {
       user: null,
@@ -22,41 +25,56 @@ export const useAuth = (handler, authScheme) => {
   });
   const [isLoading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const LocalErrorValidator = (inputValue: CredentialsType) => {
+    const response = v.parse(authScheme, inputValue);
+    return response;
+  };
 
-  const testAuth = () => {
-    const result = handler
-    console.log(result())
+  const handlerError = (state: boolean) => {
+    dispatchError({
+      type: 'change',
+      state: state
+    })
   }
   
-  const handleAuthentication = async () => {
-    setLoading(true);
-    try {
+
+  /* const clearErorrs = () => {
+    setTimeout(() => {
+      setError("");
+    }, 5000);
+  }; */
+
+  const handleAuthentication = async() => {
+/*     setLoading(true);
+ */    /* const result = handler();
+      console.log("ovo je u hooku: ", result); */
+   try {
       const result = await handler();
+      console.log("ovo je u hooku: ", result);
+
       if (result.success) {
         setData(result as AuthDataType);
-        navigate("/homepage");
+        navigate("/homepage"); 
       } else if (!result.success) {
         console.log(result);
-        setError(result.error?.message);
+        setError(result.error?.message); 
       }
     } catch (error: unknown) {
       if (error instanceof v.ValiError) {
-        setError(error.message);
-      } else if (error instanceof GenericError) {
+/*         setError(error.message);
+ */      } else if (error instanceof GenericError) {
         console.error("GenericError caught:", error);
       } else {
         console.error("Unknown error:", error);
       }
     }
-    setLoading(false);
-    clearErorrs(); 
+    /* setLoading(false);
+    clearErorrs();   */
   };
-  const clearErorrs = () => {
-    setTimeout(() => {
-      setError("");
-    }, 5000);
-  };
-  
+  useEffect(() => {
+
+  })
+  handleAuthentication();
 
   return { data, error, isLoading };
 };
