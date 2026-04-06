@@ -3,9 +3,7 @@ import "./index.css";
 
 const Input = ({
   type = "text",
-  value = "",
   placeholder = "",
-  onChange = () => {},
   variaton = "",
   name,
 }: InputType) => {
@@ -14,9 +12,7 @@ const Input = ({
       name={name}
       className={variaton}
       type={type}
-      value={value}
       placeholder={placeholder}
-      onChange={onChange}
     />
   );
 };

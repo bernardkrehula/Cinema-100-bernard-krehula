@@ -10,7 +10,7 @@ import * as v from "valibot";
 import type { HandleLoginType } from "#/types/auth.types.ts/HandleLoginType";
 import type { CredentialsType } from "#/types/auth.types.ts/CredentialsType";
 
-const LoginScheme = v.object({
+export const LoginScheme = v.object({
   email: v.pipe(
     v.string("Your email must be a string."),
     v.nonEmpty("Please enter your email."),
@@ -19,39 +19,31 @@ const LoginScheme = v.object({
   password: v.pipe(
     v.string("Your password must be a string."),
     v.nonEmpty("Please enter your password."),
-    v.minLength(8, "Your password must have 8 characters or more."),
+    v.minLength(6, "Your password must have 8 characters or more."),
   ),
 });
-const handleLogin = async (credentials: CredentialsType) => {
-  if(credentials === undefined) return {success: false}
-  const result = await requestLogIn(credentials);
-  console.log("rezulat: ", result, credentials);
-  return result;
-};
 
 const LoginForm = () => {
-  const [credentials, setCredentials] = useState<CredentialsType>({
-    email: "",
-    password: "",
-  });
-  const { data, error, isLoading } = useAuth(handleLogin, LoginScheme);
+  const { data, error, isLoading, handleAuth } = useAuth(
+    requestLogIn,
+    LoginScheme,
+  );
   const navigate = useNavigate();
   const handleSingUpReddirection = () => navigate("/sign-up");
 
   const resetInputValue = () => {};
-  const getLoginData = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email");
     const password = formData.get("password");
     const credentials = { email, password };
-    setCredentials(credentials);
-    return await handleLogin(credentials);
+    handleAuth(credentials);
   };
-  
+
   return (
     <div className="login-content">
-      <form className="login-window" onSubmit={getLoginData}>
+      <form className="login-window" onSubmit={handleLogin}>
         <h1 className="login-title">Log in</h1>
         <Input name="email" placeholder="Email" type="email" />
         <Input name="password" placeholder="Password" type="password" />
