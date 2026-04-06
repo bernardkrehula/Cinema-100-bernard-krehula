@@ -1,14 +1,12 @@
 import "./index.css";
 import Input from "#/components/ui/input";
 import Btn from "#/components/ui/btn";
-import React, { memo, useState } from "react";
-import { useNavigate, type Session } from "react-router-dom";
+import React from "react";
+import { useNavigate} from "react-router-dom";
 import { useAuth } from "#/pages/auth/hooks/useAuth";
 import LoadingSpinner from "#/components/ui/LoadingSpinner";
 import { requestLogIn } from "#/api/auth/requestLogin";
 import * as v from "valibot";
-import type { HandleLoginType } from "#/types/auth.types.ts/HandleLoginType";
-import type { CredentialsType } from "#/types/auth.types.ts/CredentialsType";
 
 export const LoginScheme = v.object({
   email: v.pipe(
@@ -31,7 +29,6 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const handleSingUpReddirection = () => navigate("/sign-up");
 
-  const resetInputValue = () => {};
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);

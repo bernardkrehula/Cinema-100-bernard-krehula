@@ -1,35 +1,12 @@
-import type { AuthDataType } from "#/types/auth.types.ts/AuthDataType";
 import type { CredentialsType } from "#/types/auth.types.ts/CredentialsType";
 import { GenericError } from "#/utils/GenericError";
-import type { AuthError, User, WeakPassword } from "@supabase/supabase-js";
 import { useReducer } from "react";
-import { useNavigate, type Session } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as v from "valibot";
 import type { LoginScheme } from "../Forms/LoginForm";
+import type { StateType } from "#/types/auth.types.ts/StateType";
+import type { ActionType } from "#/types/auth.types.ts/ActionType";
 
-type StateType = {
-  success: boolean;
-  data: {
-    user: null;
-    session: null;
-  };
-  error: string;
-  isLoading: boolean;
-};
-
-type ActionType = {
-  type: "setData" | "setError" | "setLoading";
-  reducerAction?:
-    | {
-        success: boolean;
-        data: {
-          user: null;
-          session: null;
-        };
-      }
-    | { error: string }
-    | { isLoading: boolean };
-};
 
 const reducer = (state: StateType, action: ActionType) => {
   const { type, reducerAction } = action;
@@ -77,11 +54,11 @@ export const useAuth = (
     return response;
   };
   const { data, error, isLoading } = state;
-  console.log(authScheme);
-  const handleReducer = (type: ActionType["type"], payload: any) => {
+  console.log('evo errora: ', error)
+  const handleReducer = (type: ActionType["type"], reducerAction: any) => {
     dispatch({
       type: type,
-      reducerAction: payload,
+      reducerAction: reducerAction,
     });
   };
 
@@ -101,8 +78,7 @@ export const useAuth = (
         handleReducer("setData", result);
         navigate("/homepage");
       } else if (!result.success) {
-        console.log(result);
-        handleReducer("setError", result.error);
+        handleReducer("setError", result.error.message);
       }
     } catch (error: unknown) {
       if (error instanceof v.ValiError) {
