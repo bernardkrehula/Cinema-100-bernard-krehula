@@ -1,4 +1,4 @@
-import { StrictMode } from "react";
+import { StrictMode, createContext } from "react";
 import { createRoot } from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import "./index.css";
@@ -7,10 +7,11 @@ import router from "./routes";
 
 export const queryClient = new QueryClient();
 
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+        <RouterProvider router={router} />
     </QueryClientProvider>
   </StrictMode>,
 );

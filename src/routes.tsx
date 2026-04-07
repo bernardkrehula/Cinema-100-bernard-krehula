@@ -3,25 +3,31 @@ import Homepage from "./pages/homepage";
 import SingleMovie from "./pages/SingleMovie/index.tsx";
 import LoginForm from "./pages/auth/Forms/LoginForm/index.tsx";
 import SignUpForm from "./pages/auth/Forms/SignUpForm/index.tsx";
+import App from "./App.tsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <LoginForm />,
-  },
-  {
-    path: "/sign-up",
-    element: <SignUpForm />,
-  },
-  {
-    path: "/homepage",
-    element: <Homepage />,
-  },
-  {
-    path: "/movie/:movieID",
-    element: <SingleMovie />,
+    element: <App />,
+    children: [
+      {
+        path: "/login",
+        element: <LoginForm />,
+      },
+      {
+        path: "/sign-up",
+        element: <SignUpForm />,
+      },
+      {
+        path: "/homepage",
+        element: <Homepage />,
+      },
+      {
+        path: "/movie/:movieID",
+        element: <SingleMovie />,
+      },
+    ],
   },
 ]);
 
 export default router;
-

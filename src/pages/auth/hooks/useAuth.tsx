@@ -6,7 +6,7 @@ import * as v from "valibot";
 import type { LoginScheme } from "../Forms/LoginForm";
 import type { StateType } from "#/types/auth.types.ts/StateType";
 import type { ActionType } from "#/types/auth.types.ts/ActionType";
-
+import { defaultUser } from "#/data/defaultUser";
 
 const reducer = (state: StateType, action: ActionType) => {
   const { type, reducerAction } = action;
@@ -34,15 +34,20 @@ const reducer = (state: StateType, action: ActionType) => {
   }
 };
 
-export const useAuth = (
-  handler: any,
-  authScheme: typeof LoginScheme,
-) => {
+export const useAuth = (handler: any, authScheme: typeof LoginScheme) => {
   const initaialValue = {
     success: false,
     data: {
-      user: null,
-      session: null,
+      user: defaultUser,
+      session: {
+        access_token: "",
+        token_type: "",
+        expires_in: 0,
+        expires_at: 0,
+        refresh_token: "",
+        user: defaultUser,
+        weak_password: null,
+      },
     },
     error: "",
     isLoading: false,
@@ -54,7 +59,7 @@ export const useAuth = (
     return response;
   };
   const { data, error, isLoading } = state;
-  console.log('evo errora: ', error)
+
   const handleReducer = (type: ActionType["type"], reducerAction: any) => {
     dispatch({
       type: type,
@@ -76,6 +81,7 @@ export const useAuth = (
 
       if (result.success) {
         handleReducer("setData", result);
+        localStorage.setItem('token', result.data.session.access_token);
         navigate("/homepage");
       } else if (!result.success) {
         handleReducer("setError", result.error.message);
@@ -93,5 +99,5 @@ export const useAuth = (
     clearErorrs();
   };
 
-  return { data, error, isLoading, handleAuth };
+  return { data, error, isLoading, handleAuth, navigate };
 };

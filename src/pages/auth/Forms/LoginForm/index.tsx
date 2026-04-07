@@ -1,12 +1,13 @@
 import "./index.css";
 import Input from "#/components/ui/input";
 import Btn from "#/components/ui/btn";
-import React from "react";
-import { useNavigate} from "react-router-dom";
+import React, { useEffect } from "react";
+import { useNavigate, useOutletContext} from "react-router-dom";
 import { useAuth } from "#/pages/auth/hooks/useAuth";
 import LoadingSpinner from "#/components/ui/LoadingSpinner";
 import { requestLogIn } from "#/api/auth/requestLogin";
 import * as v from "valibot";
+import { useSession } from "../../hooks/useSession";
 
 export const LoginScheme = v.object({
   email: v.pipe(
@@ -22,11 +23,10 @@ export const LoginScheme = v.object({
 });
 
 const LoginForm = () => {
-  const { data, error, isLoading, handleAuth } = useAuth(
+  const { data, error, isLoading, handleAuth, navigate } = useAuth(
     requestLogIn,
     LoginScheme,
   );
-  const navigate = useNavigate();
   const handleSingUpReddirection = () => navigate("/sign-up");
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
