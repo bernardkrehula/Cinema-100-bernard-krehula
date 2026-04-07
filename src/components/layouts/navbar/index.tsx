@@ -8,23 +8,13 @@ import { useEffect, useState } from "react";
 import LoadingLine from "#/components/ui/LoadingLine";
 
 const NavBar = () => {
-  const [isLoading, setLoading] = useState<boolean>(true);
   const navigate = useNavigate();
 
   const handleSingOut = async () => {
     const result = await requestSingOut();
-    if (result.success) return navigate("/");
+    if (result.success) return navigate("/login");
   };
   const navigateToHomepage = () => navigate("/homepage");
-
-  useEffect(() => {
-    const setLoadingLine = () => {
-      setTimeout(() => {
-        setLoading(false)
-      }, 2000);
-    };
-    setLoadingLine();
-  }, []);
 
   return (
     <nav className="navbar">

@@ -1,67 +1,50 @@
 import "./index.css";
 import Input from "#/components/ui/input";
 import Btn from "#/components/ui/btn";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import { useAuth } from "#/pages/auth/hooks/useAuth";
 import LoadingSpinner from "#/components/ui/LoadingSpinner";
+import { requestSignUp } from "#/api/auth/requestSingUp";
+import * as v from "valibot";
 
+
+const SingUpScheme = v.object({
+  email: v.pipe(
+    v.string("Your email must be a string."),
+    v.nonEmpty("Please enter your email."),
+    v.email("The email address is badly formatted."),
+  ),
+  password: v.pipe(
+    v.string("Your password must be a string."),
+    v.nonEmpty("Please enter your password."),
+    v.minLength(6, "Your password must have 8 characters or more."),
+  ),
+});
 const SignUpForm = () => {
-  const [inputValue, setInputValue] = useState<{
-    email: string;
-    password: string;
-  }>({
-    email: "",
-    password: "",
-  });
-  const [disbaleBtn, setDisableBtn] = useState<boolean>(false);
-  const { handleAuthentication, DemoLogin, error, isLoading } = useAuth();
-  const navigate = useNavigate();
-
-  const handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const name = e.target.name;
-    setInputValue({ ...inputValue, [name]: value });
-  };
-
-  const handleLoginReddirection = () => navigate("/");
-
-  const resetInputValue = () =>
-    setInputValue((prev) => ({ ...prev, email: "", password: "" }));
-
-  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const name = e.currentTarget.name;
-    setDisableBtn(true);
-    handleAuthentication(inputValue, name);
-    resetInputValue();
-  };
+  const { data, error, isLoading, handleAuth, navigate } = useAuth(
+      requestSignUp,
+      SingUpScheme,
+    );
+    const handleLoginReddirection = () => navigate("/login");
+  
+    const handleSingUp = async (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      const formData = new FormData(e.currentTarget);
+      const email = formData.get("email");
+      const password = formData.get("password");
+      const credentials = { email, password };
+      handleAuth(credentials);
+    };
 
   return (
     <div className="sing-up-content">
-      <form className="sing-up-window" name="sing-up" onSubmit={handleSignIn}>
+      <form className="sing-up-window" name="sing-up" onSubmit={handleSingUp}>
         <h1 className="sing-up-title">Sign in</h1>
-        <Input
-          name="email"
-          onChange={handleInputs}
-          placeholder="Enter new email"
-          value={inputValue.email}
-        />
-        <Input
-          type="password"
-          name="password"
-          onChange={handleInputs}
-          placeholder="Enter new password"
-          value={inputValue.password}
-        />
+        <Input name="email" placeholder="Email" type="email" />
+        <Input name="password" placeholder="Password" type="password" />
         <h2 className="sign-up-error-message">{error}</h2>
-        <Btn
-          type="submit"
-          variation={`secondary ${disbaleBtn ? "disabled" : "none"}`}
-          size="lg"
-          disabled={disbaleBtn}
-        >
-          {isLoading ? <LoadingSpinner /> : "Sign in"}
+        <Btn type="submit" variation={`secondary`} size="lg">
+          {isLoading ? <LoadingSpinner /> : "Log in"}
         </Btn>
         <div className="sing-up-questions">
           <div className="sing-up-question-section">
@@ -77,7 +60,7 @@ const SignUpForm = () => {
           </div>
           <div className="sing-up-question-section">
             <span>Or,</span>
-            <Btn type="button" onClick={DemoLogin} variation="danger" size="md">
+            <Btn type="button" /* onClick={DemoLogin} */ variation="danger" size="md">
               Log in as a guest
             </Btn>
           </div>
