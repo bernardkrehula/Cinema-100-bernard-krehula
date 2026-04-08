@@ -8,7 +8,7 @@ import type { StateType } from "#/types/auth.types.ts/StateType";
 import type { ActionType } from "#/types/auth.types.ts/ActionType";
 import { defaultUser } from "#/data/defaultUser";
 
-const reducer = (state: StateType, action: ActionType) => {
+const reducer = (state: StateType, action?: ActionType) => {
   const { type, reducerAction } = action;
   switch (type) {
     case "setData": {
@@ -33,8 +33,12 @@ const reducer = (state: StateType, action: ActionType) => {
       return state;
   }
 };
+type HandlerType = (value?: CredentialsType) => Promise<any>;
 
-export const useAuth = (handler: any, authScheme: typeof LoginScheme) => {
+export const useAuth = (
+  handler: HandlerType,
+  authScheme?: typeof LoginScheme,
+) => {
   const initaialValue = {
     success: false,
     data: {
@@ -55,6 +59,7 @@ export const useAuth = (handler: any, authScheme: typeof LoginScheme) => {
   const [state, dispatch] = useReducer(reducer, initaialValue);
   const navigate = useNavigate();
   const LocalErrorValidator = (credentials: CredentialsType) => {
+    console.log('radi validator')
     const response = v.parse(authScheme, credentials);
     return response;
   };
@@ -73,15 +78,14 @@ export const useAuth = (handler: any, authScheme: typeof LoginScheme) => {
     }, 5000);
   };
 
-  const handleAuth = async (credentials: CredentialsType) => {
+  const handleAuth = async (credentials: CredentialsType | null) => {
     handleReducer("setLoading", true);
     try {
-      LocalErrorValidator(credentials);
+      if(credentials != null) LocalErrorValidator(credentials);
       const result = await handler(credentials);
 
       if (result.success) {
         handleReducer("setData", result);
-        localStorage.setItem('token', result.data.session.access_token);
         navigate("/homepage");
       } else if (!result.success) {
         handleReducer("setError", result.error.message);
@@ -99,5 +103,5 @@ export const useAuth = (handler: any, authScheme: typeof LoginScheme) => {
     clearErorrs();
   };
 
-  return { data, error, isLoading, handleAuth, navigate };
+  return { data, error, isLoading, handleAuth };
 };

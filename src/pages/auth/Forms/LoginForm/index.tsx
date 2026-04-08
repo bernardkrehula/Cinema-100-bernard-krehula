@@ -1,13 +1,13 @@
 import "./index.css";
 import Input from "#/components/ui/input";
 import Btn from "#/components/ui/btn";
-import React, { useEffect } from "react";
-import { useNavigate, useOutletContext} from "react-router-dom";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "#/pages/auth/hooks/useAuth";
 import LoadingSpinner from "#/components/ui/LoadingSpinner";
-import { requestLogIn } from "#/api/auth/requestLogin";
+import { requestLogin } from "#/api/auth/requestLogin";
 import * as v from "valibot";
-import { useSession } from "../../hooks/useSession";
+import { requestDemoLogin } from "#/api/auth/requestDemoLogin";
 
 export const LoginScheme = v.object({
   email: v.pipe(
@@ -18,15 +18,18 @@ export const LoginScheme = v.object({
   password: v.pipe(
     v.string("Your password must be a string."),
     v.nonEmpty("Please enter your password."),
-    v.minLength(6, "Your password must have 8 characters or more."),
+    v.minLength(6, "Your password must have 6 characters or more."),
   ),
 });
 
 const LoginForm = () => {
-  const { data, error, isLoading, handleAuth, navigate } = useAuth(
-    requestLogIn,
-    LoginScheme,
-  );
+  const navigate = useNavigate();
+  const { error, isLoading, handleAuth } = useAuth(requestLogin, LoginScheme);
+  const {
+    error: demoError,
+    isLoading: demoLoading,
+    handleAuth: demoLogin,
+  } = useAuth(requestDemoLogin);
   const handleSingUpReddirection = () => navigate("/sign-up");
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -37,6 +40,7 @@ const LoginForm = () => {
     const credentials = { email, password };
     handleAuth(credentials);
   };
+  const handleDemoLogin = () => demoLogin(null);
 
   return (
     <div className="login-content">
@@ -44,9 +48,9 @@ const LoginForm = () => {
         <h1 className="login-title">Log in</h1>
         <Input name="email" placeholder="Email" type="email" />
         <Input name="password" placeholder="Password" type="password" />
-        <h2 className="login-error-message">{error}</h2>
+        <h2 className="login-error-message">{error || demoError}</h2>
         <Btn type="submit" variation={`secondary`} size="lg">
-          {isLoading ? <LoadingSpinner /> : "Log in"}
+          {isLoading || demoLoading ? <LoadingSpinner /> : "Log in"}
         </Btn>
         <div className="login-questions">
           <div className="login-question-section">
@@ -64,7 +68,8 @@ const LoginForm = () => {
             <span>Or,</span>
             <Btn
               type="button"
-              /* onClick={DemoLogin} */ variation="danger"
+              onClick={handleDemoLogin}
+              variation="danger"
               size="md"
             >
               Log in as a guest
