@@ -7,25 +7,30 @@ import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import MovieToolbar from "#/components/layouts/MovieToolbar";
 import { requestFilteredMovies } from "#/api/movies/requestFilteredMovies";
+import { useMovies } from "#/hooks/useMovies";
+import { useLocation } from "react-router-dom";
 
 const MovieList = () => {
+  const { pathname: table } = useLocation();
   const [movieFilter, setMovieFilter] = useState({
     filters: {
       search: "",
       genre: null as string | null,
+      table: table
     },
     range: {
       from: 0,
       to: 11,
     },
   });
-  const [moviePageNumbers, setMoviePageNumbers] = useState<number[]>([0]);
+
+  /*   const { data } = useMovies(movieFilter);
+   */ const [moviePageNumbers, setMoviePageNumbers] = useState<number[]>([0]);
   const [currentMoviePage, setCurrentMoviePage] = useState<number>(1);
   const { data: moviePages } = useQuery({
     queryKey: ["movie-pages", movieFilter],
     queryFn: () => requestFilteredMovies(movieFilter),
   });
-
   const getMovieListNumber = async () => {
     const visibleMoviesNum = 12;
 
