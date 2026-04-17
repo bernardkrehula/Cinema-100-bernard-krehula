@@ -1,6 +1,6 @@
 import "./index.css";
-import SliderImg from "../../../components/ui/MovieImg";
-import { useQuery } from "@tanstack/react-query";
+import MovieImg from "../../../components/ui/MovieImg";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { useState } from "react";
@@ -8,26 +8,27 @@ import Btn from "#/components/ui/btn";
 import { requestTrendingMovies } from "#/api/movies/requestTrendingMovies";
 
 const Slider = () => {
+  const table = 'trending_movies';
   const [position, setPosition] = useState<number>(0);
   const [acitvePage, setActivePage] = useState<number>(0);
   const [allPages, setAllPages] = useState<number>(0);
   const { data: trendingMovies, isLoading } = useQuery({
-    queryKey: ["trending-movies"],
+    queryKey: [table],
     queryFn: () => requestTrendingMovies(),
   });
-
+  
   const slideOnClick = (side: string) => {
-    if (!trendingMovies || trendingMovies.length === 0) return;
+    if (!trendingMovies || trendingMovies.data.length === 0) return;
 
     const visibleMovies = 4;
-    const totalPages = trendingMovies.length / visibleMovies;
+    const totalPages = trendingMovies.data.length / visibleMovies;
     setAllPages(totalPages);
     const visibleItems = 4;
     const itemWidth = 304.26;
     const gap = 5;
 
     const step = visibleItems * (itemWidth + gap);
-    const totalWidth = trendingMovies.length * (itemWidth + gap);
+    const totalWidth = trendingMovies.data.length * (itemWidth + gap);
     const visibleWidth = visibleItems * (itemWidth + gap);
 
     const maxTranslate = totalWidth - visibleWidth;
@@ -81,10 +82,10 @@ const Slider = () => {
               ? Array.from({ length: 4 }).map((_, i) => (
                   <div key={i} className="skeleton" />
                 ))
-              : trendingMovies?.map((movie) => {
-                  const { id, image } = movie;
-
-                  return <SliderImg key={id} src={image} id={id} />;
+              : trendingMovies?.data.map((movie) => {
+                  const { id } = movie;
+                  
+                  return <MovieImg key={id} table={table} movie={movie} />;
                 })}
           </div>
         </div>
