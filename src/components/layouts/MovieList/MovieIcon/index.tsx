@@ -3,12 +3,12 @@ import type { MovieIconType } from "#/types/movie.types.ts/MovieIconType";
 import "./index.css";
 import { FaStar } from "react-icons/fa";
 
-const MovieIcon = (page: MovieIconType) => {
-  const { id, image, title, year, rating, genre } = page;
+const MovieIcon = ({movie, table}: {movie: MovieIconType, table: string}) => {
+  const { title, year, rating, genre } = movie;
 
   return (
     <li className="movie-icon">
-      <MovieImg id={id} src={image} />
+      <MovieImg table={table} movie={movie}/>
       <h3>{title}</h3>
       <div className="movie-icon-info">
         <h4>{year}</h4>
@@ -21,6 +21,6 @@ const MovieIcon = (page: MovieIconType) => {
         </ul>
       </div>
     </li>
-  );
+  ); 
 };
 export default MovieIcon;

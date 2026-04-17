@@ -5,9 +5,10 @@ const Btn = ({
   variation,
   size,
   type = "button",
-  onClick = () => {},
+  onClick,
   children,
   disabled,
+  name
 }: BtnType) => {
   return (
     <button
@@ -15,6 +16,7 @@ const Btn = ({
       className={`btn ${variation} ${size}`}
       type={type}
       disabled={disabled}
+      name={name}
     >
       {children}
     </button>

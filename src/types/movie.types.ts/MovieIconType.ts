@@ -12,4 +12,6 @@ export type MovieIconType = {
   thumbnail: string;
   rating: number;
   year: number;
+  isSaved: boolean;
+  user_id?: string;
 };
