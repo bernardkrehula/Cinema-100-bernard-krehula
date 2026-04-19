@@ -4,15 +4,19 @@ import "./index.css";
 import { FaPowerOff } from "react-icons/fa6";
 import Logo from "#/components/ui/logo";
 import { requestSingOut } from "#/api/auth/requestSignOut";
-import { useEffect, useState } from "react";
 import LoadingLine from "#/components/ui/LoadingLine";
+import { useSession } from "#/hooks/useSession";
+import { requestMoviesReset } from "#/api/movies/requestMoviesReset";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const { clearSession } = useSession();
 
   const handleSingOut = async () => {
     const result = await requestSingOut();
-    if (result.success) return navigate("/login");
+    if (result.success) navigate("/login");
+    clearSession();
+    requestMoviesReset();
   };
   const navigateToHomepage = () => navigate("/homepage");
 
