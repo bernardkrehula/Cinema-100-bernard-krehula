@@ -5,11 +5,13 @@ export const requestFilteredMovies = async ({
   filters,
   range,
 }: FilteredMovies) => {
+  const { table } = filters;
   try {
     let query = supabase
-      .from("movies")
+      .from(table)
       .select("*", { count: "exact" })
       .range(range.from, range.to);
+
     if (filters.genre) {
       query = query.or(`genre.cs.["${filters.genre}"]`);
     }
