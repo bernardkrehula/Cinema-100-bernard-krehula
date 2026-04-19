@@ -59,7 +59,6 @@ export const useAuth = (
   const [state, dispatch] = useReducer(reducer, initaialValue);
   const navigate = useNavigate();
   const LocalErrorValidator = (credentials: CredentialsType) => {
-    console.log('radi validator')
     const response = v.parse(authScheme, credentials);
     return response;
   };

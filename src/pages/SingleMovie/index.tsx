@@ -4,7 +4,7 @@ import { requestSingleMovie } from "#/api/movies/requestSingleMovie";
 import { useQuery } from "@tanstack/react-query";
 import NavBar from "#/components/layouts/navbar";
 import { FaStar } from "react-icons/fa";
-import SliderImg from "../../components/ui/MovieImg";
+import MovieImg from "../../components/ui/MovieImg";
 
 const SingleMovie = () => {
   const { movieID } = useParams();
@@ -34,7 +34,6 @@ const SingleMovie = () => {
     description,
     director,
     writers,
-    image,
     trailer,
     rating,
     year,
@@ -62,7 +61,7 @@ const SingleMovie = () => {
           </div>
         </div>
         <div className="movie-frame">
-          <SliderImg src={image} />
+          <MovieImg {...movie} />
           <iframe src={trailer} title="Movie trailer" allowFullScreen />
         </div>
         <article className="movie-textual-info-bottom">
