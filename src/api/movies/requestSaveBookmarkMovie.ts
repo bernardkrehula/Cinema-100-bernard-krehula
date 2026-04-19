@@ -11,10 +11,14 @@ export const requestSaveBookmarkMovie = async (movie: MovieIconType) => {
       },
     },
   } = await supabase.auth.getSession();
-  
+
+  const newMovie = {...movie, isSaved: true}
+
   const { data, error } = await supabase
     .from("bookmarks")
-    .insert([{ user_id, ...movie}]);
+    .insert([{ user_id, ...newMovie}]);
+            console.log('ova funkcija se pokrece')
+
   if (error) {
     if (isAuthApiError(error)) {
       return { success: false, error };
