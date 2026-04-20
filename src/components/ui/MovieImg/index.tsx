@@ -7,9 +7,11 @@ import { useNavigate } from "react-router-dom";
 import { requestSaveBookmarkMovie } from "#/api/movies/requestSaveBookmarkMovie";
 import { requestRemoveBookmarkMovie } from "#/api/movies/requestRemoveBookmarkMovie";
 import { useBookMovie } from "#/hooks/useBookMovie";
+import type { MovieIconType } from "#/types/movie.types.ts/MovieIconType";
 
-const MovieImg = ({ movie, table }) => {
+const MovieImg = ({ movie, table }: {movie: MovieIconType, table?: string}) => {
   const { id, image: src, isSaved } = movie;
+
   const navigate = useNavigate();
   const { mutate: saveMovie } = useBookMovie(id, table);
 
