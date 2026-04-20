@@ -1,9 +1,14 @@
 import supabase from "#/config/supabaseClientVite";
-import { useState } from "react";
+import { useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 
 export const useSession = () => {
-  const hanldeSession = async() => {
-    supabase.auth.getSession();
+ const { data: session, isLoading } = useQuery({
+    queryKey: ["session"],
+    queryFn: () => hanldeSession(),
+  });
+ 
+  const hanldeSession = async () => {
+    return supabase.auth.getSession();
   };
   const clearSession = () => {
     const {
@@ -13,5 +18,5 @@ export const useSession = () => {
     });
   };
 
-  return { hanldeSession, clearSession };
+  return { session, clearSession, isLoading };
 };
