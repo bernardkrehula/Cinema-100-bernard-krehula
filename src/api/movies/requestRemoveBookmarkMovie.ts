@@ -2,7 +2,7 @@ import supabase from "#/config/supabaseClientVite";
 import { GenericError } from "#/utils/GenericError";
 import { isAuthApiError } from "@supabase/supabase-js";
 
-export const requestRemoveBookmarkMovie = async (id: string) => {
+export const requestRemoveBookmarkMovie = async (movie_id: string) => {
   const {
     data: {
       session: {
@@ -13,7 +13,7 @@ export const requestRemoveBookmarkMovie = async (id: string) => {
   const { error } = await supabase
     .from("bookmarks")
     .delete()
-    .match({ user_id: user_id, id: id });
+    .match({ user_id: user_id, movie_id: movie_id });
 
   if (error) {
     if (isAuthApiError(error)) {
