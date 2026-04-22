@@ -1,5 +1,4 @@
 import supabase from "#/config/supabaseClientVite";
-import type { CredentialsType } from "#/types/auth.types.ts/CredentialsType";
 import { GenericError } from "#/utils/GenericError";
 import { isAuthApiError } from "@supabase/supabase-js";
 

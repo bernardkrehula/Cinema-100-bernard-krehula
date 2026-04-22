@@ -8,7 +8,6 @@ import { requestSaveBookmarkMovie } from "#/api/movies/requestSaveBookmarkMovie"
 import { requestRemoveBookmarkMovie } from "#/api/movies/requestRemoveBookmarkMovie";
 import { useBookMovie } from "#/hooks/useBookMovie";
 import type { MovieIconType } from "#/types/movie.types.ts/MovieIconType";
-import { useState } from "react";
 import { useIsMovieSaved } from "#/hooks/useIsMovieSaved";
 
 const MovieImg = ({

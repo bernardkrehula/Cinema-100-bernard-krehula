@@ -12,7 +12,7 @@ const SingleMovie = () => {
     queryKey: [`movie-${movieID}`],
     queryFn: () => requestSingleMovie(movieID),
   });
-
+  
   if (isLoading)
     return (
       <div className="single-movie">
@@ -25,7 +25,7 @@ const SingleMovie = () => {
         </div>
       </div>
     );
-
+  
   const {
     id,
     title,
@@ -38,7 +38,7 @@ const SingleMovie = () => {
     rating,
     year,
   } = movie;
-  console.log(movie);
+
   return (
     <div className="single-movie" key={id}>
       <NavBar />
