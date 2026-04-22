@@ -7,8 +7,8 @@ export const requestLogin = async (inputValue: CredentialsType) => {
   const { email, password } = inputValue;
 
   const { data, error } = await supabase.auth.signInWithPassword({
-    email: email,
-    password: password,
+    email: email as string,
+    password: password as string,
   });
   if (error) {
     if (isAuthApiError(error)) {

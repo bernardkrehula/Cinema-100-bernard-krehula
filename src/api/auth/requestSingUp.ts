@@ -6,8 +6,8 @@ import { isAuthApiError } from "@supabase/supabase-js";
 export const requestSignUp = async (inputValue: CredentialsType) => {
   const { email, password } = inputValue;
   const { data, error } = await supabase.auth.signUp({
-    email: email,
-    password: password,
+    email: email as string,
+    password: password as string,
   });
   if (error) {
     if (isAuthApiError(error)) {
