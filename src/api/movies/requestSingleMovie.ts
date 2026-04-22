@@ -12,4 +12,5 @@ export const requestSingleMovie = async (id: string | undefined) => {
       throw new GenericError();
     }
   }
+  return response.data;
 };
