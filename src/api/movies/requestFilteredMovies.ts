@@ -9,12 +9,23 @@ export const requestFilteredMovies = async ({
 }: FilteredMovies) => {
   const { table } = filters;
 
-  let query = supabase
-    .from(table)
-    .select("*", { count: "exact" })
-    .range(range.from, range.to);
+  const {
+    data: {
+      session: {
+        user: { id: user_id },
+      },
+    },
+  } = await supabase.auth.getSession();
 
-  const moviesId = (await query).data.map(({ id }) => id);
+  let query = supabase.from(table).select("*", { count: "exact" });
+
+  if ((await query).data[0].user_id) {
+    query = query.eq("user_id", user_id);
+  }
+
+  query.range(range.from, range.to);
+
+  const moviesId = (await query).data.map(({ movie_id }) => movie_id);
 
   if ((await query).data[0]?.user_id) {
     query = supabase
