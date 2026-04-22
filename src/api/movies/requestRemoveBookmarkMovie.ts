@@ -1,5 +1,6 @@
 import supabase from "#/config/supabaseClientVite";
-import { requestSyncSavedMovies } from "./reqeustSyncSavedMovies";
+import { GenericError } from "#/utils/GenericError";
+import { isAuthApiError } from "@supabase/supabase-js";
 
 export const requestRemoveBookmarkMovie = async (id: string) => {
   const {
@@ -9,15 +10,17 @@ export const requestRemoveBookmarkMovie = async (id: string) => {
       },
     },
   } = await supabase.auth.getSession();
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("bookmarks")
     .delete()
-    .match({ user_id: user_id, id: id })
-
-  await requestSyncSavedMovies(id, false);
+    .match({ user_id: user_id, id: id });
 
   if (error) {
-    throw new Error(error.message);
+    if (isAuthApiError(error)) {
+      return error;
+    } else {
+      throw new GenericError();
+    }
   }
 
   return;

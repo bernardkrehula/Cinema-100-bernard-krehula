@@ -1,5 +1,6 @@
 import supabase from "#/config/supabaseClientVite";
-import { requestSyncMoviesWithBookmarks } from "./requestSyncMoviesWithBookmarks";
+import { GenericError } from "#/utils/GenericError";
+import { isAuthApiError } from "@supabase/supabase-js";
 
 export const requestTrendingMovies = async () => {
   const response = await supabase
@@ -8,7 +9,11 @@ export const requestTrendingMovies = async () => {
     .order("id", { ascending: true });
 
   if (response.error) {
-    throw new Error(response.error.message);
+    if (isAuthApiError(response)) {
+      return response.error;
+    } else {
+      throw new GenericError();
+    }
   }
   return response;
 };
