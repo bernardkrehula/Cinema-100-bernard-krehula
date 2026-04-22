@@ -38,7 +38,7 @@ const SingleMovie = () => {
     rating,
     year,
   } = movie;
-
+  console.log(movie);
   return (
     <div className="single-movie" key={id}>
       <NavBar />
@@ -61,7 +61,7 @@ const SingleMovie = () => {
           </div>
         </div>
         <div className="movie-frame">
-          <MovieImg {...movie} />
+          <MovieImg movie={movie} />
           <iframe src={trailer} title="Movie trailer" allowFullScreen />
         </div>
         <article className="movie-textual-info-bottom">
