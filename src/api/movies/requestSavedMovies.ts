@@ -1,10 +1,20 @@
 import supabase from "#/config/supabaseClientVite";
-import type { FilteredMovies } from "#/types/movie.types.ts/FilteredMovies";
 import { GenericError } from "#/utils/GenericError";
 import { isAuthApiError } from "@supabase/supabase-js";
 
 export const requestSavedMovies = async () => {
-  const response = await supabase.from("bookmarks").select("id");
+  const {
+    data: {
+      session: {
+        user: { id: user_id },
+      },
+    },
+  } = await supabase.auth.getSession();
+
+  const response = await supabase
+    .from("bookmarks")
+    .select("movie_id")
+    .eq("user_id", user_id);
 
   if (response.error) {
     if (isAuthApiError(response.error)) {

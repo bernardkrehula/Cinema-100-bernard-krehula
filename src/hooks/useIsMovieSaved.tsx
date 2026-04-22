@@ -7,6 +7,7 @@ export const useIsMovieSaved = (id: string) => {
     queryFn: () => requestSavedMovies(),
   });
 
-  const isSaved = movies?.data.some((movie: { id: string}) => movie.id === id) ?? false;
+  const isSaved = movies?.data.some((movie: { movie_id: string }) => movie.movie_id === id) ?? false;
+
   return { isSaved: isSaved };
 };
