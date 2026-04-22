@@ -6,7 +6,6 @@ import Logo from "#/components/ui/logo";
 import { requestSingOut } from "#/api/auth/requestSignOut";
 import LoadingLine from "#/components/ui/LoadingLine";
 import { useSession } from "#/hooks/useSession";
-import { requestMoviesReset } from "#/api/movies/requestMoviesReset";
 
 const NavBar = () => {
   const navigate = useNavigate();
@@ -16,7 +15,6 @@ const NavBar = () => {
     const result = await requestSingOut();
     if (result.success) navigate("/login");
     clearSession();
-    requestMoviesReset();
   };
   const navigateToHomepage = () => navigate("/homepage");
 
